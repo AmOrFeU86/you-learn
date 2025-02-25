@@ -1,16 +1,22 @@
 .concept-list-container {
-  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  min-height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: calc(100vh - 120px); /* Full viewport height minus header and padding */
+  overflow-y: auto;
 
   h1 {
     text-align: center;
     margin: 0;
-    flex-shrink: 0;
     color: #333;
     font-size: 1.5rem;
+    padding: 1rem 0;
+    background: #f8f9fa;
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
 }
 
@@ -18,7 +24,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  padding: 0 1rem;
+  padding: 1rem;
 }
 
 .concept-card {
