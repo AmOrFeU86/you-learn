@@ -1,0 +1,88 @@
+{
+  "concepts": [
+    {
+      "title": "MongoDB",
+      "description": "Base de datos orientada a documentos para aplicaciones modernas, diseñada para escalar y manejar estructuras complejas.",
+      "example": "Usar MongoDB para una aplicación de redes sociales donde cada usuario tiene un perfil con publicaciones, amigos y configuraciones personalizadas.",
+      "category": "Fundamentos"
+    },
+    {
+      "title": "Modelo de Documento",
+      "description": "Almacena información en documentos flexibles (similar a registros) que pueden incluir arrays y documentos anidados, lo que permite modelar relaciones de forma natural.",
+      "example": "{\n  \"_id\": 9950,\n  \"nombre\": \"Dunham, Justin\",\n  \"departamento\": \"Marketing\",\n  \"beneficios\": [\n    { \"tipo\": \"Salud\", \"plan\": \"PPO Plus\" },\n    { \"tipo\": \"Dental\", \"plan\": \"Standard\" }\n  ]\n}",
+      "category": "Modelado de Datos"
+    },
+    {
+      "title": "BSON vs JSON",
+      "description": "BSON es el formato binario utilizado para almacenar documentos en MongoDB, ofreciendo más tipos de datos y mejor rendimiento que JSON, que es un formato de texto.",
+      "example": "Mientras que en JSON un número se representa simplemente como 123, en BSON ese mismo número se almacena junto con información sobre su tipo (por ejemplo, entero de 32 bits).",
+      "category": "Fundamentos"
+    },
+    {
+      "title": "Denormalización",
+      "description": "Consiste en combinar datos de múltiples tablas (en un RDBMS) en un único documento para reducir la necesidad de uniones (joins) en sistemas distribuidos.",
+      "example": "En lugar de tener tablas separadas para \"empleados\" y \"beneficios\", se almacena toda la información en un único documento del empleado que incluya un array con sus beneficios.",
+      "category": "Modelado de Datos"
+    },
+    {
+      "title": "Replica Set",
+      "description": "Mecanismo de alta disponibilidad que consiste en múltiples copias de los datos distribuidas en distintos nodos.",
+      "example": "Configurar un replica set con tres nodos en diferentes centros de datos para asegurar que, si uno falla, los otros continúan atendiendo las peticiones.",
+      "category": "Alta Disponibilidad"
+    },
+    {
+      "title": "Sharding",
+      "description": "Técnica de partición horizontal que distribuye datos entre múltiples servidores o clusters para mejorar la escalabilidad.",
+      "example": "Dividir una colección de millones de documentos en fragmentos (shards) basados en una clave (por ejemplo, geográfica) para distribuir la carga entre varios servidores.",
+      "category": "Escalabilidad"
+    },
+    {
+      "title": "MongoDB Atlas",
+      "description": "Servicio en la nube que ofrece MongoDB de manera administrada, facilitando la creación, gestión y escalado de clusters.",
+      "example": "Crear un cluster gratuito (M0) en Atlas para desarrollar y probar una aplicación sin necesidad de gestionar la infraestructura física.",
+      "category": "Servicios Cloud"
+    },
+    {
+      "title": "MongoDB Query Language (MQL)",
+      "description": "Lenguaje de consulta nativo de MongoDB que utiliza objetos en lugar de cadenas SQL, ofreciendo consultas más seguras y eficientes.",
+      "example": "db.empleados.find({ \"departamento\": \"Marketing\" })\npara obtener todos los empleados del departamento de Marketing.",
+      "category": "Consultas"
+    },
+    {
+      "title": "Pipeline de Agregación",
+      "description": "Herramienta que permite procesar y transformar datos mediante una serie de etapas, facilitando cálculos complejos y resúmenes.",
+      "example": "db.ventas.aggregate([\n  { $group: { _id: \"$region\", totalVentas: { $sum: \"$monto\" } } }\n])",
+      "category": "Consultas"
+    },
+    {
+      "title": "Índices",
+      "description": "Estructuras que optimizan las consultas al facilitar el acceso rápido a los datos.",
+      "example": "db.usuarios.createIndex({ email: 1 })",
+      "category": "Optimización"
+    },
+    {
+      "title": "Drivers e Integración con Lenguajes",
+      "description": "Conjunto de bibliotecas que permiten interactuar con MongoDB desde diversos lenguajes de programación de forma nativa.",
+      "example": "const { MongoClient } = require('mongodb');\nconst client = new MongoClient(uri);\nawait client.connect();",
+      "category": "Desarrollo"
+    },
+    {
+      "title": "Herramientas de Gestión Empresarial",
+      "description": "Soluciones como Ops Manager, Cloud Manager, y la integración con Kubernetes y Terraform, que facilitan el monitoreo, administración y respaldo de los clusters.",
+      "example": "Configurar alertas de rendimiento y respaldos automáticos a través de Ops Manager para garantizar la continuidad del servicio en un entorno empresarial.",
+      "category": "Administración"
+    },
+    {
+      "title": "Compass",
+      "description": "Interfaz gráfica para explorar y analizar la estructura de datos en MongoDB de forma intuitiva.",
+      "example": "Usar Compass para visualizar la distribución de documentos en una colección, revisar índices y optimizar consultas mediante su herramienta de análisis visual.",
+      "category": "Herramientas"
+    },
+    {
+      "title": "Características de Alta Velocidad y Flexibilidad",
+      "description": "Orientada a actualizaciones rápidas, consultas eficientes y la capacidad de manejar grandes volúmenes de datos con estructuras dinámicas.",
+      "example": "En una aplicación de comercio electrónico, MongoDB permite actualizar el estado de un pedido sin necesidad de bloquear el registro completo, mejorando la experiencia del usuario en tiempo real.",
+      "category": "Rendimiento"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+<div class="concept-detail-container" *ngIf="concept">
+  <button class="back-button" routerLink="/">← Back to List</button>
+  
+  <div class="concept-content">
+    <h1>{{ concept.title }}</h1>
+    <span class="category">{{ concept.category }}</span>
+    <p class="description">{{ concept.description }}</p>
+  </div>
+</div>

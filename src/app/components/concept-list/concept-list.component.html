@@ -1,0 +1,24 @@
+<div class="concept-list-container">
+  <h1>MongoDB Concepts</h1>
+  <div *ngIf="isListView" class="concept-grid">
+    <div *ngFor="let concept of concepts" class="concept-card" (click)="showConceptDetail(concept)">
+      <div class="concept-header">
+        <h2>{{ concept.title }}</h2>
+        <span class="category">{{ concept.category }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isListView && selectedConcept" class="concept-detail">
+    <button class="back-button" (click)="backToList()">← Volver a la lista</button>
+    <div class="concept-content">
+      <h1>{{ selectedConcept.title }}</h1>
+      <span class="category">{{ selectedConcept.category }}</span>
+      <p class="description">{{ selectedConcept.description }}</p>
+      <div class="example">
+        <h3>Ejemplo:</h3>
+        <pre><code>{{ selectedConcept.example }}</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
