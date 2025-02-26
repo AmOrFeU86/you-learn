@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavHeaderComponent } from './components/nav-header/nav-header.component';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,13 @@ import { NavHeaderComponent } from './components/nav-header/nav-header.component
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'you-learn';
+  
+  constructor(private themeService: ThemeService) {}
+  
+  ngOnInit(): void {
+    // Initialize theme service
+    this.themeService.isDarkTheme$().subscribe();
+  }
 }

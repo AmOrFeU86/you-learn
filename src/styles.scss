@@ -18,4 +18,120 @@ body {
   color: #333;
   background-color: #f8f9fa;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light theme styles (default) */
+body.light-theme {
+  color: #333;
+  background-color: #f8f9fa;
+  
+  a {
+    color: #0066cc;
+  }
+  
+  button:not(.theme-toggle-button) {
+    background-color: #fff;
+    color: #333;
+    border-color: #ddd;
+  }
+  
+  input, textarea, select {
+    background-color: #fff;
+    color: #333;
+    border-color: #ddd;
+  }
+  
+  .concept-list-container {
+    background-color: #fff;
+  }
+  
+  .concept-item {
+    background-color: #fff;
+    border-color: #eee;
+  }
+  
+  .concept-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .concept-detail-container {
+    background-color: #fff;
+  }
+  
+  pre, code {
+    background-color: #f5f5f5 !important;
+    color: #333 !important;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    color: #333;
+  }
+}
+
+/* Dark theme styles */
+body.dark-theme {
+  color: #e9ecef;
+  background-color: #121212;
+  
+  /* Adjust other elements for dark mode */
+  a {
+    color: #8ab4f8;
+  }
+  
+  button:not(.theme-toggle-button) {
+    background-color: #333;
+    color: #fff;
+    border-color: #555;
+  }
+  
+  input, textarea, select {
+    background-color: #333;
+    color: #fff;
+    border-color: #555;
+  }
+  
+  /* Add more dark theme overrides as needed */
+  .concept-list-container {
+    background-color: #1e1e1e;
+  }
+  
+  .concept-item {
+    background-color: #2d2d2d;
+    border-color: #444;
+  }
+  
+  .concept-item:hover {
+    background-color: #3d3d3d;
+  }
+  
+  .concept-detail-container {
+    background-color: #121212;
+  }
+  
+  pre, code {
+    background-color: #2d2d2d !important;
+    color: #e9ecef !important;
+  }
+  
+  .modal-content {
+    background-color: #2d2d2d;
+    color: #e9ecef;
+  }
+}
+
+/* Global styles for lists */
+.description ul, .description ol {
+  margin: 1rem 0;
+  padding-left: 1.5rem !important;
+  list-style-position: outside !important;
+}
+
+.description li {
+  margin-bottom: 0.5rem;
+  display: list-item !important;
+  text-indent: 0 !important;
+  padding-left: 0 !important;
+  margin-left: 0 !important;
 }

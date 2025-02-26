@@ -3,8 +3,24 @@
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
+  min-height: 100%;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s ease, color 0.3s ease;
 
   h1 {
     margin-bottom: 2rem;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+}
+
+/* Dark theme styles */
+:host-context(body.dark-theme) {
+  .flash-cards-container {
+    background-color: #121212;
+    
+    h1 {
+      color: #e9ecef;
+    }
   }
 }

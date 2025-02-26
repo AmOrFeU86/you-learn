@@ -3,30 +3,262 @@
     {
       "id": 1,
       "father": null,
-      "children": [2, 3],
-      "title": "MongoDB Query Language vs. Aggregation Queries",
-      "description": "Explains that MongoDB does not use a formal query language like SQL; instead, queries are built as objects in code, emphasizing that queries are generated programmatically rather than manually written.",
-      "example": "db.movies.find({ year: 1933 }, { _id: 0, title: 1, 'awards.text': 1 }).sort({ 'awards.wins': -1 }).limit(1)",
+      "children": [2, 3, 8, 12, 15, 19, 23],
+      "title": "Reactive Forms",
+      "description": "<strong>Reactive Forms</strong> en Angular ofrecen un enfoque poderoso y <em>model-driven</em> para gestionar entradas de formularios que cambian dinámicamente con el tiempo. A diferencia de sus contrapartes template-driven, proporcionan una forma <em>explícita e inmutable</em> de manejar el estado del formulario, utilizando <code>observable streams</code> para un acceso instantáneo a los valores de entrada y sus actualizaciones.<br><br>Este enfoque garantiza <strong>consistencia de datos</strong>, facilita las pruebas y desbloquea capacidades avanzadas como:<ul><li>Adición o eliminación dinámica de controles</li><li>Lógica de validación sofisticada</li><li>Seguimiento en tiempo real de cambios en el formulario</li></ul>Es la opción perfecta para construir aplicaciones complejas y cargadas de datos.",
+      "example": null,
       "label": "Introducción",
-      "category": "MongoDB Day1"
+      "category": "Angular Reactive Forms"
     },
     {
       "id": 2,
       "father": 1,
       "children": [],
-      "title": "Edge Cases in Selection and Projection",
-      "description": "Covers how basic MongoDB find operations use filter, projection, and sort objects, and highlights potential pitfalls of constructing queries as single strings.",
-      "example": "db.movies.find({ year: 1933 }, { _id: 0, title: 1, 'awards.text': 1 })",
-      "label": "CRUD",
-      "category": "MongoDB Day1"
+      "title": "Overview of Reactive Forms",
+      "description": "<strong>Reactive Forms</strong> destacan por su <em>immutable design</em>, donde cada cambio en el estado del formulario genera una instantánea fresca y predecible. Aprovechan los <code>observable streams</code> para ofrecerte un acceso síncrono y en tiempo real a los valores de entrada, a diferencia de los template-driven forms, que dependen de datos mutables y actualizaciones más lentas basadas en directivas.<br><br>¿Por qué elegir Reactive Forms? Ofrecen:<ul><li><strong>Datos predecibles</strong> para facilitar las pruebas</li><li><em>Synchronous control</em> sobre los cambios del formulario</li><li>Soporte robusto para lógicas complejas</li></ul>Esto los convierte en la opción ideal para desarrolladores que necesitan precisión y escalabilidad.",
+      "example": null,
+      "label": "Conceptos Básicos",
+      "category": "Angular Reactive Forms"
     },
     {
       "id": 3,
       "father": 1,
+      "children": [4, 5, 6, 7],
+      "title": "Adding a Basic Form Control",
+      "description": "Agregar un <strong>basic FormControl</strong> en Reactive Forms es un proceso sencillo de tres pasos que vincula la lógica de tu formulario con la interfaz de usuario. Deberás:<ul><li>Registrar el <code>ReactiveFormsModule</code></li><li>Crear un componente con un <code>FormControl</code></li><li>Vincularlo a tu template</li></ul><br>Esto establece una <em>conexión directa y programática</em> entre tu modelo de datos y la vista, allanando el camino para actualizaciones y validaciones en tiempo real, perfecto para empezar tu viaje con Reactive Forms.",
+      "example": "import { FormControl } from '@angular/forms'; class NameEditorComponent { name = new FormControl(''); updateName() { this.name.setValue('Nancy'); } }",
+      "label": "FormControl Básico",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 4,
+      "father": 3,
       "children": [],
-      "title": "MongoDB Queries",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
+      "title": "Import the ReactiveFormsModule",
+      "description": "Para desbloquear los <strong>Reactive Forms</strong>, necesitas importar el <code>ReactiveFormsModule</code> desde <code>@angular/forms</code> y añadirlo a las importaciones del <code>NgModule</code> de tu aplicación. Este módulo impulsa todo con directivas clave como <code>FormControlDirective</code>, permitiendo una vinculación y gestión de estado sin problemas.<br><br>Es el <em>primer paso esencial</em>: sin él, Reactive Forms no funcionarán, ¡así que no lo omitas!",
+      "example": "import { NgModule } from '@angular/core'; import { ReactiveFormsModule } from '@angular/forms'; @NgModule({ imports: [ReactiveFormsModule], declarations: [AppComponent] }) export class AppModule {}",
+      "label": "Configuración",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 5,
+      "father": 3,
+      "children": [],
+      "title": "Generate a Component with FormControl",
+      "description": "Comienza generando un nuevo componente (piensa en <code>ng generate component name-editor</code>) y luego crea un <strong>FormControl</strong> dentro de él. Este <code>FormControl</code> rastrea una sola entrada, como el nombre de un usuario, manejando su valor, validez y cambios.<br><br>Te da <em>control instantáneo</em> para monitorear o ajustar la entrada programáticamente, diferenciando Reactive Forms de los template-driven con su flexibilidad práctica.",
+      "example": "import { Component } from '@angular/core'; import { FormControl } from '@angular/forms'; @Component({ selector: 'app-name-editor', template: '<input [formControl]=\"name\">' }) export class NameEditorComponent { name = new FormControl(''); updateName() { this.name.setValue('Nancy'); } }",
+      "label": "Componente",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 6,
+      "father": 3,
+      "children": [],
+      "title": "Register the Control in the Template",
+      "description": "Vincula tu <strong>FormControl</strong> a una entrada en el template usando la directiva <code>[formControl]</code>. Esto crea un <em>puente bidireccional</em>: las actualizaciones desde la interfaz fluyen al modelo, y los cambios en el modelo se reflejan en la vista.<br><br>Es la magia que mantiene todo sincronizado, haciendo que tu formulario sea receptivo e interactivo con un esfuerzo mínimo.",
+      "example": "<label for=\"name\">Nombre: </label> <input id=\"name\" type=\"text\" [formControl]=\"name\"> <p>Valor: {{ name.value }}</p>",
+      "label": "Template",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 7,
+      "father": 3,
+      "children": [],
+      "title": "Displaying and Updating Form Control Values",
+      "description": "¿Quieres <strong>mostrar</strong> el valor de un control? Usa <code>{{ name.value }}</code> o accede a <code>valueChanges</code> para actualizaciones en vivo. ¿Necesitas <strong>cambiarlo</strong>? Llama a <code>setValue()</code> para actualizarlo programáticamente, como al llenar datos desde una API.<br><br>Este <em>doble poder</em> te permite mantener a los usuarios informados y ajustar valores sobre la marcha, todo mientras mantienes las cosas predecibles y fluidas.",
+      "example": "<label for=\"name\">Nombre: </label> <input id=\"name\" [formControl]=\"name\"> <p>Valor: {{ name.value }}</p> <button (click)=\"updateName()\">Actualizar Nombre</button> <!-- TS: updateName() { this.name.setValue('Nancy'); } -->",
+      "label": "Interacción",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 8,
+      "father": 1,
+      "children": [9, 10, 11],
+      "title": "Grouping Form Controls",
+      "description": "Con un <strong>FormGroup</strong>, puedes agrupar controles relacionados —como nombre y dirección— en una sola unidad manejable. Rastrea su estado y valores combinados, soportando:<ul><li><em>Flat groups</em> para formularios simples</li><li><em>Nested groups</em> para los complejos</li></ul><br>Esto facilita manejar formularios lógicamente y actualizarlos con métodos como <code>patchValue()</code>.",
+      "example": "import { FormGroup, FormControl } from '@angular/forms'; profileForm = new FormGroup({ firstName: new FormControl(''), lastName: new FormControl('') });",
+      "label": "FormGroup",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 9,
+      "father": 8,
+      "children": [],
+      "title": "Create a FormGroup Instance",
+      "description": "Construye un <strong>FormGroup</strong> pasando un objeto donde cada clave nombra un <code>FormControl</code> o otro <code>FormGroup</code>. Combina todos sus valores y estados en un objeto práctico.<br><br>Este <em>centro principal</em> es perfecto para organizar entradas relacionadas —como un profile con campos de dirección anidados— y mantener todo bajo control.",
+      "example": "profileForm = new FormGroup({ firstName: new FormControl(''), lastName: new FormControl(''), address: new FormGroup({ street: new FormControl(''), city: new FormControl('') }) });",
+      "label": "Instancia",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 10,
+      "father": 8,
+      "children": [],
+      "title": "Associate FormGroup with Template",
+      "description": "Vincula un <strong>FormGroup</strong> a tu formulario con <code>[formGroup]</code> y conecta cada control usando <code>formControlName</code>. Para nested groups, añade <code>formGroupName</code>.<br><br>Esta configuración asegura que <em>cada cambio se sincronice</em> —desde las entradas al modelo y viceversa— manteniendo el estado del formulario y la interfaz perfectamente alineados.",
+      "example": "<form [formGroup]=\"profileForm\"> <label>Nombre: </label> <input formControlName=\"firstName\"> <div formGroupName=\"address\"> <input formControlName=\"street\"> </div> </form>",
+      "label": "Template",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 11,
+      "father": 8,
+      "children": [],
+      "title": "Save Form Data",
+      "description": "Captura los datos del formulario escuchando <code>(ngSubmit)</code> —activado por un botón de envío— y toma el <strong>valor del FormGroup</strong> en un método como <code>onSubmit()</code>. Luego puedes registrarlo, enviarlo o pasarlo a otro lugar.<br><br>Es una forma <em>limpia y segura</em> de empaquetar todo lo que el usuario ingresó para procesarlo más adelante.",
+      "example": "<form [formGroup]=\"profileForm\" (ngSubmit)=\"onSubmit()\"><input formControlName=\"firstName\"><button type=\"submit\">Enviar</button></form> <!-- TS: onSubmit() { console.log(this.profileForm.value); } -->",
+      "label": "Submit",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 12,
+      "father": 1,
+      "children": [13, 14],
+      "title": "Creating Nested Form Groups",
+      "description": "¿Necesitas domar un formulario grande? Los <strong>nested FormGroups</strong> te permiten dividirlo en fragmentos lógicos —como un address dentro de un profile—. Los cambios en estos subgrupos se propagan al padre, manteniendo todo <em>consistente y organizado</em>.<br><br>Es una manera inteligente de gestionar la complejidad sin perder de vista el panorama general.",
+      "example": "profileForm = new FormGroup({ firstName: new FormControl(''), address: new FormGroup({ street: new FormControl(''), city: new FormControl('') }) });",
+      "label": "Anidamiento",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 13,
+      "father": 12,
+      "children": [],
+      "title": "Create a Nested Group",
+      "description": "Para crear un <strong>nested FormGroup</strong>, incluye un nuevo <code>FormGroup</code> dentro del objeto de configuración de tu padre —como una sección de 'address' con sus propios controles—. Es como darle a tu formulario un <em>mini-form</em> dentro de él, ideal para datos agrupados como street y city.",
+      "example": "profileForm = new FormGroup({ firstName: new FormControl(''), address: new FormGroup({ street: new FormControl(''), city: new FormControl(''), state: new FormControl(''), zip: new FormControl('') }) });",
+      "label": "Estructura",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 14,
+      "father": 12,
+      "children": [],
+      "title": "Group Nested Form in Template",
+      "description": "En el template, usa <code>formGroupName</code> para conectar un <strong>nested FormGroup</strong>, y <code>formControlName</code> para sus controles. Esto refleja la estructura de tu modelo en la interfaz, manteniendo el flujo de datos <em>fluido e intuitivo</em> en todos los niveles.",
+      "example": "<form [formGroup]=\"profileForm\"> <div formGroupName=\"address\"> <label>Calle: </label> <input formControlName=\"street\"> <label>Ciudad: </label> <input formControlName=\"city\"> </div> </form>",
+      "label": "Template",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 15,
+      "father": 1,
+      "children": [16, 17, 18],
+      "title": "Using the FormBuilder Service",
+      "description": "El servicio <strong>FormBuilder</strong> es tu atajo para crear Reactive Forms. Con métodos como <code>group()</code> y <code>control()</code>, reduce el código repetitivo, haciendo que la configuración del formulario sea <em>más rápida y limpia</em>.<br><br>Es especialmente útil para formularios grandes o dinámicos donde una configuración manual se volvería engorrosa rápidamente.",
+      "example": "profileForm = this.formBuilder.group({ firstName: [''], lastName: [''] });",
+      "label": "FormBuilder",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 16,
+      "father": 15,
+      "children": [],
+      "title": "Import and Inject FormBuilder",
+      "description": "Para usar <strong>FormBuilder</strong>, impórtalo desde <code>@angular/forms</code> e inyéctalo en tu componente (vía <code>inject()</code> o constructor). Es tu puerta de entrada a una forma más simple y eficiente de construir formularios, impulsada por <em>ReactiveFormsModule</em>.",
+      "example": "import { Component, inject } from '@angular/core'; import { FormBuilder } from '@angular/forms'; @Component({...}) export class ProfileEditorComponent { private formBuilder = inject(FormBuilder); profileForm = this.formBuilder.group({ firstName: [''] }); }",
+      "label": "Configuración",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 17,
+      "father": 15,
+      "children": [],
+      "title": "Generate Form Controls with FormBuilder",
+      "description": "Con <strong>FormBuilder</strong>, usa <code>group()</code> para crear un <code>FormGroup</code> con controles definidos en arreglos —el primer elemento es el valor, los siguientes pueden ser validators—. Nest groups dentro para estructurar, manteniendo las cosas <em>ordenadas y escalables</em> con menos complicaciones.",
+      "example": "profileForm = this.formBuilder.group({ firstName: [''], address: this.formBuilder.group({ street: [''], city: [''] }) });",
+      "label": "Generación",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 18,
+      "father": 15,
+      "children": [],
+      "title": "Updating Parts of the Model",
+      "description": "¿Necesitas ajustar tu formulario? Usa <code>setValue()</code> para renovar todo (es estricto con la estructura) o <code>patchValue()</code> para actualizar solo algunas partes (más relajado). <strong>PatchValue</strong> es genial para insertar datos parciales —como desde una API— sin tocar el resto.<br><br>Es <em>control flexible</em> al alcance de tu mano.",
+      "example": "updateProfile() { this.profileForm.patchValue({ firstName: 'Nancy', address: { street: '123 Drew Street' } }); } <!-- Solo actualiza firstName y street, dejando el resto sin cambios -->",
+      "label": "Actualización",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 19,
+      "father": 1,
+      "children": [20, 21, 22],
+      "title": "Validating Form Input",
+      "description": "<strong>Validation</strong> asegura que los datos de tu formulario sean sólidos antes de que vayan a cualquier parte. Añade validators a los controles, y su estado se propaga al <code>FormGroup</code>. Esto te permite:<ul><li>Bloquear el envío hasta que todo sea válido</li><li>Mostrar a los usuarios qué necesita arreglo</li></ul><br>Todo se trata de mantener las cosas <em>confiables y amigables para el usuario</em>.",
+      "example": "profileForm = this.formBuilder.group({ firstName: ['', Validators.required], lastName: [''] });",
+      "label": "Validación",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 20,
+      "father": 19,
+      "children": [],
+      "title": "Import Validators",
+      "description": "Toma la clase <strong>Validators</strong> desde <code>@angular/forms</code> para acceder a funciones útiles como <code>required</code> o <code>minLength</code>. Marcan errores o dan luz verde, haciendo que sea <em>fácil aplicar reglas</em> en tus campos de formulario sin reinventar la rueda.",
+      "example": "import { Component } from '@angular/core'; import { FormBuilder, Validators } from '@angular/forms'; @Component({...}) export class ProfileEditorComponent { constructor(private fb: FormBuilder) {} profileForm = this.fb.group({ firstName: ['', Validators.required] }); }",
+      "label": "Configuración",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 21,
+      "father": 19,
+      "children": [],
+      "title": "Make a Field Required",
+      "description": "Aplica <code>Validators.required</code> a un control para hacerlo <strong>obligatorio</strong>. Permanecerá inválido hasta que se complete, afectando el estado de todo el formulario —ideal para asegurar que campos clave (como un nombre) no se pasen por alto.<br><br>Es una forma simple de mantener tus datos <em>completos</em>.",
+      "example": "profileForm = this.formBuilder.group({ firstName: ['', Validators.required], lastName: [''] }); <!-- firstName debe ser llenado -->",
+      "label": "Regla",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 22,
+      "father": 19,
+      "children": [],
+      "title": "Display Form Status",
+      "description": "El <strong>status</strong> de un formulario (‘VALID’ o ‘INVALID’) muestra si está listo, según sus validators. Muéstralo en el template con <code>{{ profileForm.status }}</code> para dar a los usuarios <em>retroalimentación en tiempo real</em> —como habilitar un botón de envío solo cuando todo esté correcto.",
+      "example": "<form [formGroup]=\"profileForm\"> <input formControlName=\"firstName\" required> </form> <p>Estado del Formulario: {{ profileForm.status }}</p> <!-- Muestra 'INVALID' hasta que firstName esté lleno -->",
+      "label": "Estado",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 23,
+      "father": 1,
+      "children": [24, 25, 26],
+      "title": "Creating Dynamic Forms",
+      "description": "<strong>Dynamic Forms</strong> usan <code>FormArray</code> para manejar un número flexible de controles —piensa en añadir aliases o ítems sobre la marcha—. Resume los valores y la validez de sus hijos, permitiéndote:<ul><li>Añadir controles en runtime</li><li>Eliminarlos según sea necesario</li></ul><br>Es <em>libertad para formularios</em> que crecen con la entrada del usuario.",
+      "example": "profileForm = this.formBuilder.group({ aliases: this.formBuilder.array([this.formBuilder.control('')]) });",
+      "label": "FormArray",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 24,
+      "father": 23,
+      "children": [],
+      "title": "Define and Access FormArray",
+      "description": "Configura un <strong>FormArray</strong> con <code>FormBuilder.array()</code>, empezando con cualquier número de controles. Usa un getter (como <code>get aliases</code>) para tomarlo limpiamente desde tu <code>FormGroup</code>.<br><br>Es tu <em>boleto al control dinámico</em>, listo para añadir más conforme avances.",
+      "example": "profileForm = this.formBuilder.group({ aliases: this.formBuilder.array([this.formBuilder.control('')]) }); get aliases() { return this.profileForm.get('aliases') as FormArray; }",
+      "label": "Estructura",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 25,
+      "father": 23,
+      "children": [],
+      "title": "Display FormArray in Template",
+      "description": "Muestra un <strong>FormArray</strong> con <code>formArrayName</code> y recorre sus controles usando <code>*ngFor</code>. Vincula cada uno a la interfaz con <code>[formControlName]</code> y el índice.<br><br>Es una <em>exhibición dinámica</em> que se actualiza mientras los controles vienen y van.",
+      "example": "<div formArrayName=\"aliases\"> <h2>Aliases</h2> <div *ngFor=\"let alias of aliases.controls; let i=index\"> <label>Alias:</label> <input [formControlName]=\"i\"> </div> </div>",
+      "label": "Template",
+      "category": "Angular Reactive Forms"
+    },
+    {
+      "id": 26,
+      "father": 23,
+      "children": [],
+      "title": "Add Controls Dynamically",
+      "description": "Haz crecer tu <strong>FormArray</strong> llamando a <code>push()</code> con un nuevo <code>FormControl</code> —por ejemplo, cuando un usuario hace clic en un botón—. El template lo recoge automáticamente, haciendo que sea <em>fácil expandir</em> tu formulario según lo que el usuario necesite.",
+      "example": "addAlias() { this.aliases.push(this.formBuilder.control('')); } <!-- Template: --> <button (click)=\"addAlias()\">+ Añadir Alias</button> <div formArrayName=\"aliases\" *ngFor=\"let alias of aliases.controls; let i=index\"> <input [formControlName]=\"i\"> </div>",
+      "label": "Dinamismo",
+      "category": "Angular Reactive Forms"
     }
   ]
 }

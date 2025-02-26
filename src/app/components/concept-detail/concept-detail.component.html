@@ -1,9 +1,63 @@
 <div class="concept-detail-container" *ngIf="concept">
-  <button class="back-button" routerLink="/">← Back to List</button>
-  
-  <div class="concept-content">
-    <h1>{{ concept.title }}</h1>
-    <span class="category">{{ concept.category }}</span>
-    <p class="description">{{ concept.description }}</p>
+
+  <div class="scrollable-content">
+    <div class="header-actions">
+      <button class="back-button" (click)="onBack()">
+        {{ concept.father !== null ? '↑ Go to Parent' : '← Back to List' }}
+      </button>
+      <button class="tree-button" *ngIf="concept.children && concept.children.length > 0" (click)="onShowTree()">
+        🌳 View Concept Tree
+      </button>
+    </div>
+    
+    <div class="concept-detail-layout">
+      <!-- Left side: Concept Detail -->
+      <div class="concept-content">
+        <h1>{{ concept.title }}</h1>
+        <div class="metadata">
+          <span class="label">{{ concept.label }}</span>
+          <span class="category">{{ concept.category }}</span>
+        </div>
+        <div class="description" [innerHTML]="getSafeDescription(concept.description)"></div>
+        <div class="example" *ngIf="concept.example">
+          <h3>Example:</h3>
+          <pre><code [class]="'language-' + getLanguageFromExample(concept.example)">{{ formatExample(concept.example) }}</code></pre>
+        </div>
+      </div>
+
+      <!-- Right side: Children Panel -->
+      <div class="children-container">
+        <div *ngIf="childConcepts.length > 0" class="children-panel">
+          <h3>Related Concepts</h3>
+          <div class="children-list">
+            <div *ngFor="let child of childConcepts" 
+                 class="child-item" 
+                 (click)="onSelectConcept(child)"
+                 [class.active]="concept?.id === child.id">
+              <h4>{{ child.title }}</h4>
+              <span class="label">{{ child.label }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tree View Modal -->
+    <div class="modal" *ngIf="showTreeView" (click)="showTreeView = false">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Concept Tree View</h2>
+          <button class="close-button" (click)="showTreeView = false">×</button>
+        </div>
+        <div class="modal-body">
+          <app-concept-tree 
+            *ngIf="showTreeView && concept"
+            [concepts]="allConcepts" 
+            [rootConceptId]="concept.id"
+            (selectConcept)="onTreeConceptSelect($event)">
+          </app-concept-tree>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

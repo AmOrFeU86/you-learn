@@ -1,47 +1,25 @@
 <div class="concept-list-container">
-  <h1>MongoDB Concepts</h1>
-  
-  <!-- Main Grid View -->
-  <div *ngIf="isListView" class="concept-grid">
-    <div *ngFor="let concept of concepts" class="concept-card" (click)="showConceptDetail(concept)">
-      <div class="concept-header">
-        <h2>{{ concept.title }}</h2>
-        <span class="label">{{ concept.label }}</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Detail View with Side Panel -->
-  <div *ngIf="!isListView && selectedConcept" class="concept-detail-layout">
-    <button class="back-button" (click)="backToList()">
-      {{ selectedConcept.father !== null ? '↑ Go to Parent' : '← Back to List' }}
-    </button>
-    
-    <div class="concept-detail-container">
-      <!-- Left side: Concept Detail -->
-      <div class="concept-content">
-        <h1>{{ selectedConcept.title }}</h1>
-        <span class="label">{{ selectedConcept.label }}</span>
-        <p class="description">{{ selectedConcept.description }}</p>
-        <div class="example">
-          <h3>Example:</h3>
-          <pre><code [class]="'language-' + getLanguageFromExample(selectedConcept.example)">{{ selectedConcept.example }}</code></pre>
-        </div>
-      </div>
-
-      <!-- Right side: Children Panel -->
-      <div *ngIf="childConcepts.length > 0" class="children-panel">
-        <h3>Related Concepts</h3>
-        <div class="children-list">
-          <div *ngFor="let child of childConcepts" 
-               class="child-item" 
-               (click)="showConceptDetail(child)"
-               [class.active]="selectedConcept?.id === child.id">
-            <h4>{{ child.title }}</h4>
-            <span class="label">{{ child.label }}</span>
-          </div>
+  <div class="scrollable-content">
+    <!-- Main Grid View -->
+    <div *ngIf="isListView" class="concept-grid">
+      <div *ngFor="let concept of concepts" 
+           class="concept-card" 
+           (click)="showConceptDetail(concept)">
+        <div class="concept-header">
+          <h2>{{ concept.title }}</h2>
+          <span class="label">{{ concept.label }}</span>
         </div>
       </div>
     </div>
+
+    <!-- Detail View -->
+    <app-concept-detail 
+      *ngIf="!isListView && selectedConcept"
+      [concept]="selectedConcept"
+      [childConcepts]="childConcepts"
+      [allConcepts]="allConcepts"
+      (goBack)="onBack()"
+      (selectConcept)="showConceptDetail($event)">
+    </app-concept-detail>
   </div>
 </div>

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { ConceptService } from '../../services/concept.service';
 import { Concept } from '../../models/concept.model';
+import { ConceptDetailComponent } from '../concept-detail/concept-detail.component';
 
 // Import Prism CSS theme
 import 'prismjs/themes/prism-okaidia.css';
@@ -17,9 +18,10 @@ declare var Prism: any;
 @Component({
   selector: 'app-concept-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, ConceptDetailComponent],
   templateUrl: './concept-list.component.html',
-  styleUrls: ['./concept-list.component.scss']
+  styleUrls: ['./concept-list.component.scss'],
+  providers: [ConceptService]
 })
 export class ConceptListComponent implements OnInit {
   allConcepts: Concept[] = [];  // Store all concepts
@@ -31,9 +33,18 @@ export class ConceptListComponent implements OnInit {
   constructor(private conceptService: ConceptService) {}
 
   ngOnInit(): void {
-    this.conceptService.getConcepts().subscribe(concepts => {
-      this.allConcepts = concepts;
-      this.filterRootConcepts();
+    this.loadConcepts();
+  }
+
+  loadConcepts(): void {
+    this.conceptService.getConcepts().subscribe({
+      next: (concepts) => {
+        this.allConcepts = concepts;
+        this.filterRootConcepts();
+      },
+      error: (error) => {
+        console.error('Error loading concepts:', error);
+      }
     });
   }
 
@@ -84,20 +95,20 @@ export class ConceptListComponent implements OnInit {
   }
 
   showConceptDetail(concept: Concept): void {
-    this.selectedConcept = {
-      ...concept,
-      example: this.formatExample(concept.example)
-    };
-    // Get child concepts
+    this.selectedConcept = concept;
     this.childConcepts = this.getChildConcepts(concept.id);
     this.isListView = false;
+    
+    // Make sure we have all concepts loaded
+    console.log('showConceptDetail - allConcepts:', this.allConcepts.length);
+    
     // Highlight code after view updates
     setTimeout(() => {
       Prism.highlightAll();
     });
   }
 
-  backToList(): void {
+  onBack(): void {
     if (this.selectedConcept && this.selectedConcept.father !== null) {
       // If current concept has a father, show the father concept
       const fatherConcept = this.allConcepts.find(c => c.id === this.selectedConcept?.father);

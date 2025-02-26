@@ -4,6 +4,7 @@
   flex-direction: column;
   background: #f8f9fa;
   padding-top: 56px; /* Add padding to container instead */
+  transition: background-color 0.3s ease;
 }
 
 app-nav-header {
@@ -14,6 +15,7 @@ app-nav-header {
   z-index: 100;
   background: white;
   height: 56px;
+  transition: background-color 0.3s ease;
 }
 
 main {
@@ -27,10 +29,32 @@ header {
   background: #fff;
   padding: 0.5rem 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
   .logo {
     font-size: 1.25rem;
     font-weight: 600;
     color: #2c3e50;
+    transition: color 0.3s ease;
+  }
+}
+
+/* Dark theme styles */
+:host-context(body.dark-theme) {
+  .app-container {
+    background: #121212;
+  }
+  
+  app-nav-header {
+    background: #1e1e1e;
+  }
+  
+  header {
+    background: #1e1e1e;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    
+    .logo {
+      color: #e9ecef;
+    }
   }
 }

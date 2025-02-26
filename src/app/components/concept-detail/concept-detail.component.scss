@@ -1,50 +1,421 @@
 .concept-detail-container {
-  padding: 2rem;
-  max-width: 800px;
-  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.back-button {
-  background: none;
-  border: none;
-  color: #2c3e50;
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 0.5rem 0;
+.concept-detail-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  .concept-content {
+    width: 100%;
+    max-width: 800px;
+    
+    h1 {
+      margin-bottom: 1rem;
+      color: #333;
+      font-size: 2rem;
+    }
+
+    .metadata {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+
+      .label, .category {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: #e9ecef;
+        border-radius: 16px;
+        font-size: 0.875rem;
+        color: #495057;
+      }
+
+      .category {
+        background: #e7f5ff;
+        color: #1971c2;
+      }
+    }
+
+    .description {
+      margin: 1.5rem 0;
+      line-height: 1.6;
+      font-size: 1rem;
+      color: #333;
+      
+      /* Styles for HTML elements within description */
+      strong, b {
+        font-weight: 600;
+      }
+      
+      em, i {
+        font-style: italic;
+      }
+      
+      code {
+        font-family: monospace;
+        background-color: #f5f5f5;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-size: 0.9rem;
+      }
+      
+      /* Direct and specific list styling */
+      ul, ol {
+        margin: 1rem 0;
+        padding-left: 1.5rem !important;
+        list-style-position: outside !important;
+      }
+      
+      li {
+        margin-bottom: 0.5rem;
+        display: list-item !important;
+        text-indent: 0 !important;
+        padding-left: 0 !important;
+        margin-left: 0 !important;
+      }
+      
+      a {
+        color: #007bff;
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .example {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-top: 2rem;
+      
+      h3 {
+        margin-bottom: 1rem;
+        color: #495057;
+      }
+
+      pre {
+        margin: 0;
+        code {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+
+  .children-container {
+    width: 100%;
+    // Empty container will still take up space
+  }
+
+  .children-panel {
+    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  
+    h3 {
+      margin-bottom: 1rem;
+      color: #495057;
+      font-size: 1.1rem;
+      position: sticky;
+      top: 0;
+      background: #f8f9fa;
+      padding-bottom: 0.5rem;
+      z-index: 1;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+  }
+
+  .children-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    padding: 0 0.5rem 1.5rem 0;
+    margin-bottom: 0;
+    flex: 1;
+  }
+
+  .child-item {
+    padding: 1rem;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e9ecef;
+  
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+  
+    &.active {
+      background: #e7f5ff;
+      border-color: #74c0fc;
+    }
+  
+    h4 {
+      margin: 0 0 0.5rem 0;
+      color: #333;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+  
+    .label {
+      font-size: 0.8rem;
+      color: #666;
+      transition: color 0.3s ease, background-color 0.3s ease;
+    }
+  }
+}
+
+.scrollable-content {
+  flex: 1;
+  overflow: visible;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
   margin-bottom: 2rem;
-  display: inline-block;
-  text-decoration: none;
+  padding-top: 10px;
 
-  &:hover {
-    color: #1abc9c;
+  button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+    height: 38px; /* Set a consistent height */
+    display: flex;
+    align-items: center;
+    
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  .back-button {
+    background: #f8f9fa;
+    
+    &:hover {
+      background: #e9ecef;
+    }
+  }
+
+  .tree-button {
+    background: #f8f9fa;
+    
+    &:hover {
+      background: #e9ecef;
+    }
   }
 }
 
-.concept-content {
-  background: white;
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 
-  h1 {
-    margin: 0 0 1rem 0;
-    color: #2c3e50;
+  .modal-content {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
-  .category {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    background: #e9ecef;
-    border-radius: 15px;
-    font-size: 0.875rem;
-    color: #495057;
-    margin-bottom: 1.5rem;
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+
+    h2 {
+      margin: 0;
+      color: #495057;
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #868e96;
+      cursor: pointer;
+      padding: 0.5rem;
+      
+      &:hover {
+        color: #495057;
+      }
+    }
   }
 
-  .description {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #2c3e50;
-    margin: 0;
+  .modal-body {
+    padding: 1rem;
+    overflow-y: auto;
+    max-height: calc(90vh - 4rem);
+  }
+}
+
+/* Light theme styles */
+:host-context(body.light-theme) {
+  .concept-detail-container {
+    background-color: #fff;
+  }
+  
+  .concept-content {
+    h1 {
+      color: #333;
+    }
+    
+    .metadata {
+      .label {
+        background: #f0f0f0;
+        color: #555;
+      }
+    }
+  }
+}
+
+/* Dark theme styles */
+:host-context(body.dark-theme) {
+  .concept-detail-container {
+    background-color: #121212;
+  }
+  
+  .concept-content {
+    h1 {
+      color: #e9ecef;
+    }
+    
+    .metadata {
+      .label {
+        background: #333;
+        color: #e9ecef;
+      }
+      
+      .category {
+        background: #1864ab;
+        color: #e9ecef;
+      }
+    }
+    
+    .description {
+      color: #e9ecef;
+      
+      code {
+        background-color: #2d2d2d;
+        color: #e9ecef;
+      }
+      
+      a {
+        color: #4dabf7;
+      }
+    }
+    
+    .example {
+      background: #2d2d2d;
+      
+      h3 {
+        color: #e9ecef;
+      }
+    }
+  }
+  
+  .children-container {
+    .children-panel {
+      background-color: #2d2d2d;
+      border-color: #444;
+      
+      h3 {
+        color: #e9ecef;
+        background-color: #2d2d2d; /* Fix for sticky header in dark mode */
+      }
+      
+      .children-list {
+        /* Add styles for the children list */
+        &::-webkit-scrollbar {
+          width: 8px;
+        }
+        
+        &::-webkit-scrollbar-track {
+          background: #333;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+          background-color: #555;
+          border-radius: 4px;
+        }
+      }
+      
+      .child-item {
+        background-color: #333;
+        border-color: #444;
+        
+        &:hover {
+          background-color: #444;
+        }
+        
+        &.active {
+          background-color: #1864ab;
+          border-color: #1c7ed6;
+        }
+        
+        h4 {
+          color: #e9ecef;
+        }
+        
+        .label {
+          background: #444;
+          color: #e9ecef;
+        }
+      }
+    }
+  }
+  
+  .modal-content {
+    background-color: #2d2d2d;
+    
+    .modal-header {
+      h2 {
+        color: #e9ecef;
+      }
+    }
+  }
+  
+  .back-button, .tree-button {
+    background-color: #333;
+    color: #e9ecef;
+    border-color: #444;
+    
+    &:hover {
+      background-color: #444;
+    }
   }
 }
