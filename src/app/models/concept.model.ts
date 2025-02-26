@@ -1,5 +1,7 @@
 export interface Concept {
-  id?: number;
+  id: number;
+  father: number | null;
+  children: number[];
   title: string;
   description: string;
   label: string;

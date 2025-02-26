@@ -1,206 +1,31 @@
 {
   "concepts": [
     {
+      "id": 1,
+      "father": null,
+      "children": [2, 3],
       "title": "MongoDB Query Language vs. Aggregation Queries",
       "description": "Explains that MongoDB does not use a formal query language like SQL; instead, queries are built as objects in code, emphasizing that queries are generated programmatically rather than manually written.",
       "example": "db.movies.find({ year: 1933 }, { _id: 0, title: 1, 'awards.text': 1 }).sort({ 'awards.wins': -1 }).limit(1)",
-      "label": "Consultas",
+      "label": "Introducción",
       "category": "MongoDB Day1"
     },
     {
+      "id": 2,
+      "father": 1,
+      "children": [],
       "title": "Edge Cases in Selection and Projection",
       "description": "Covers how basic MongoDB find operations use filter, projection, and sort objects, and highlights potential pitfalls of constructing queries as single strings.",
       "example": "db.movies.find({ year: 1933 }, { _id: 0, title: 1, 'awards.text': 1 })",
+      "label": "CRUD",
+      "category": "MongoDB Day1"
+    },
+    {
+      "id": 3,
+      "father": 1,
+      "children": [],
+      "title": "MongoDB Queries",
       "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "$elemMatch Operator",
-      "description": "Demonstrates how the $elemMatch operator is used to query within arrays, particularly for matching an element that satisfies multiple criteria.",
-      "example": "db.a.find({ people: { $elemMatch: { firstname: 'john', lastname: 'doe' } } })",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Expressive Queries with $expr",
-      "description": "Shows how MongoDB’s $expr allows embedding aggregation expressions within queries for dynamic computation and comparisons on the fly.",
-      "example": "db.movies.find({ $expr: { $gt: ['$imdb.rating', 9] } })",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Aggregation Pipelines",
-      "description": "Introduces pipelines as sequences of stages that transform document streams through filtering, grouping, sorting, and reshaping.",
-      "example": "db.movies.aggregate([\n  { $unwind: '$countries' },\n  { $group: { _id: '$countries', year: { $min: '$year' } } },\n  { $sort: { year: -1 } },\n  { $project: { country: '$_id', year: 1, _id: 0 } }\n])",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Aggregation Reshaping Operators: $project, $set, $redact, $replaceRoot",
-      "description": "These operators reshape documents within a pipeline, allowing for inclusion, exclusion, addition of computed fields, or full replacement of documents.",
-      "example": "{ $project: { country: '$_id', year: 1, _id: 0 } }",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Summarization Stages in Aggregation",
-      "description": "Focuses on stages that summarize or reduce data using operations like $group, $bucket, $bucketAuto, $sortByCount, and $facet.",
-      "example": "{ $group: { _id: { $multiply: [10, { $floor: { $divide: ['$year', 10] } }] }, count: { $sum: 1 } } }",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Connection Stages: $lookup and Expressive $lookup",
-      "description": "Allows joining data from multiple collections; a simple $lookup performs a left outer join, while expressive lookups incorporate sub-pipelines for more complex joins.",
-      "example": "{ $lookup: { from: 'movies', localField: 'directors', foreignField: 'directors', as: 'seeAlso' } }",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Output Stages: $out and $merge",
-      "description": "Stages that direct the output of an aggregation pipeline into a collection, with $out replacing the target collection and $merge updating an existing one.",
-      "example": "db.movies.aggregate([ addRank, { $out: 'rankDirector' } ])",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Blocking vs. Non-Blocking Stages",
-      "description": "Differentiates between stages that stream documents immediately (non-blocking) and those that require processing the entire dataset before outputting results (blocking).",
-      "example": "Non-blocking: $match, $set, $unwind; Blocking: $group, $sort, $facet",
-      "label": "Optimización",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "List Comprehension Expressions: $map, $reduce, $zip, $range",
-      "description": "Expressions that allow for processing arrays directly within a projection stage, enabling complex computations without unwinding the array.",
-      "example": "{ $set: { squaredlist: { $map: { input: '$some_list', in: { $mul: ['$$this', '$$this'] } } } } }",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Using $let for Variable Binding in Aggregation",
-      "description": "Allows temporary variable definition within an aggregation expression to avoid redundant computations.",
-      "example": "{ $set: { normals: { $let: { vars: { sqrtofa: { $sqrt: '$a' } }, in: { $map: { input: values, in: { $divide: ['$$this', '$$sqrtofa'] } } } } } } }",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Updates with Aggregation Pipelines",
-      "description": "Since MongoDB 4.2, aggregation pipelines can be used in update operations to compute new field values based on existing ones.",
-      "example": "db.numbers.updateMany({}, [{ $set: { prime: isPrime } }])",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Generating Queries and Pipelines in Code",
-      "description": "Highlights building queries and aggregation pipelines dynamically with functions for improved code reusability and complexity management.",
-      "example": "db.temperatures.find({ temperature: fahrenheit(451) })",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Determining Prime Numbers using Aggregation",
-      "description": "An advanced example that uses $range, $map, and $reduce to implement an algorithm for checking if a number is prime directly within MongoDB.",
-      "example": "Aggregation pipeline that generates a range of potential factors and reduces them to a Boolean flag indicating primality.",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "MongoDB",
-      "description": "Base de datos orientada a documentos para aplicaciones modernas, diseñada para escalar y manejar estructuras complejas.",
-      "example": "Usar MongoDB para una aplicación de redes sociales donde cada usuario tiene un perfil con publicaciones, amigos y configuraciones personalizadas.",
-      "label": "Fundamentos",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Modelo de Documento",
-      "description": "Almacena información en documentos flexibles (similar a registros) que pueden incluir arrays y documentos anidados, lo que permite modelar relaciones de forma natural.",
-      "example": "{\n  \"_id\": 9950,\n  \"nombre\": \"Dunham, Justin\",\n  \"departamento\": \"Marketing\",\n  \"beneficios\": [\n    { \"tipo\": \"Salud\", \"plan\": \"PPO Plus\" },\n    { \"tipo\": \"Dental\", \"plan\": \"Standard\" }\n  ]\n}",
-      "label": "Modelado de Datos",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "BSON vs JSON",
-      "description": "BSON es el formato binario utilizado para almacenar documentos en MongoDB, ofreciendo más tipos de datos y mejor rendimiento que JSON, que es un formato de texto.",
-      "example": "Mientras que en JSON un número se representa simplemente como 123, en BSON ese mismo número se almacena junto con información sobre su tipo (por ejemplo, entero de 32 bits).",
-      "label": "Fundamentos",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Denormalización",
-      "description": "Consiste en combinar datos de múltiples tablas (en un RDBMS) en un único documento para reducir la necesidad de uniones (joins) en sistemas distribuidos.",
-      "example": "En lugar de tener tablas separadas para \"empleados\" y \"beneficios\", se almacena toda la información en un único documento del empleado que incluya un array con sus beneficios.",
-      "label": "Modelado de Datos",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Replica Set",
-      "description": "Mecanismo de alta disponibilidad que consiste en múltiples copias de los datos distribuidas en distintos nodos.",
-      "example": "Configurar un replica set con tres nodos en diferentes centros de datos para asegurar que, si uno falla, los otros continúen atendiendo las peticiones.",
-      "label": "Alta Disponibilidad",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Sharding",
-      "description": "Técnica de partición horizontal que distribuye datos entre múltiples servidores o clusters para mejorar la escalabilidad.",
-      "example": "Dividir una colección de millones de documentos en fragmentos (shards) basados en una clave (por ejemplo, geográfica) para distribuir la carga entre varios servidores.",
-      "label": "Escalabilidad",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "MongoDB Atlas",
-      "description": "Servicio en la nube que ofrece MongoDB de manera administrada, facilitando la creación, gestión y escalado de clusters.",
-      "example": "Crear un cluster gratuito (M0) en Atlas para desarrollar y probar una aplicación sin necesidad de gestionar la infraestructura física.",
-      "label": "Servicios Cloud",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "MongoDB Query Language (MQL)",
-      "description": "Lenguaje de consulta nativo de MongoDB que utiliza objetos en lugar de cadenas SQL, ofreciendo consultas más seguras y eficientes.",
-      "example": "db.empleados.find({ \"departamento\": \"Marketing\" })\npara obtener todos los empleados del departamento de Marketing.",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Pipeline de Agregación",
-      "description": "Herramienta que permite procesar y transformar datos mediante una serie de etapas, facilitando cálculos complejos y resúmenes.",
-      "example": "db.ventas.aggregate([\n  { $group: { _id: \"$region\", totalVentas: { $sum: \"$monto\" } } }\n])",
-      "label": "Consultas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Índices",
-      "description": "Estructuras que optimizan las consultas al facilitar el acceso rápido a los datos.",
-      "example": "db.usuarios.createIndex({ email: 1 })",
-      "label": "Optimización",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Drivers e Integración con Lenguajes",
-      "description": "Conjunto de bibliotecas que permiten interactuar con MongoDB desde diversos lenguajes de programación de forma nativa.",
-      "example": "const { MongoClient } = require('mongodb');\nconst client = new MongoClient(uri);\nawait client.connect();",
-      "label": "Desarrollo",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Herramientas de Gestión Empresarial",
-      "description": "Soluciones como Ops Manager, Cloud Manager, y la integración con Kubernetes y Terraform, que facilitan el monitoreo, administración y respaldo de los clusters.",
-      "example": "Configurar alertas de rendimiento y respaldos automáticos a través de Ops Manager para garantizar la continuidad del servicio en un entorno empresarial.",
-      "label": "Administración",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Compass",
-      "description": "Interfaz gráfica para explorar y analizar la estructura de datos en MongoDB de forma intuitiva.",
-      "example": "Usar Compass para visualizar la distribución de documentos en una colección, revisar índices y optimizar consultas mediante su herramienta de análisis visual.",
-      "label": "Herramientas",
-      "category": "MongoDB Day1"
-    },
-    {
-      "title": "Características de Alta Velocidad y Flexibilidad",
-      "description": "Orientada a actualizaciones rápidas, consultas eficientes y la capacidad de manejar grandes volúmenes de datos con estructuras dinámicas.",
-      "example": "En una aplicación de comercio electrónico, MongoDB permite actualizar el estado de un pedido sin necesidad de bloquear el registro completo, mejorando la experiencia del usuario en tiempo real.",
-      "label": "Rendimiento",
       "category": "MongoDB Day1"
     }
   ]
