@@ -1,4 +1,53 @@
 <div class="flash-cards-container">
-  <h1>Flash Cards</h1>
-  <p>Flash cards content coming soon...</p>
+  <div class="flash-cards-header">
+    <h1>Flash Cards</h1>
+    <button class="add-button" (click)="navigateToAddFlashCards()">
+      <i class="fas fa-plus"></i> Add Flash Cards
+    </button>
+  </div>
+  
+  <div class="flash-cards-content">
+    <!-- No cards message -->
+    <div *ngIf="noCardsAvailable" class="no-cards-message">
+      <p>No flash cards available. Click the "Add Flash Cards" button to create some!</p>
+    </div>
+    
+    <!-- Flash card display -->
+    <div *ngIf="!noCardsAvailable && currentCard" class="flash-card-wrapper">
+      <div class="flash-card" [class.show-answer]="showAnswer">
+        <div class="flash-card-inner">
+          <!-- Front side (question) -->
+          <div class="flash-card-front">
+            <div class="card-content">
+              <h2>Question</h2>
+              <p>{{ currentCard.key }}</p>
+            </div>
+            <button class="flip-button" (click)="toggleAnswer()">Show Answer</button>
+          </div>
+          
+          <!-- Back side (answer) -->
+          <div class="flash-card-back">
+            <div class="card-content">
+              <h2>Answer</h2>
+              <p>{{ currentCard.value }}</p>
+            </div>
+            <button class="flip-button" (click)="toggleAnswer()">Show Question</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Navigation controls -->
+      <div class="card-navigation">
+        <button class="nav-button prev" (click)="previousCard()">
+          <i class="fas fa-chevron-left"></i> Previous
+        </button>
+        <div class="card-counter">
+          {{ currentCardIndex + 1 }} / {{ flashCards.length }}
+        </div>
+        <button class="nav-button next" (click)="nextCard()">
+          Next <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

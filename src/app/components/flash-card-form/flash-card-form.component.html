@@ -1,0 +1,65 @@
+<div class="flash-card-form-container">
+  <div class="form-header">
+    <h1>Add Flash Cards</h1>
+    <button class="back-button" (click)="navigateToFlashCards()">
+      <i class="fas fa-arrow-left"></i> Back to Flash Cards
+    </button>
+  </div>
+
+  <div class="form-content">
+    <form [formGroup]="flashCardForm" (ngSubmit)="onSubmit()">
+      <!-- Success Message -->
+      <div *ngIf="submitSuccess" class="alert alert-success">
+        Flash cards saved successfully!
+      </div>
+      
+      <!-- Error Message -->
+      <div *ngIf="submitError" class="alert alert-danger">
+        {{ submitError }}
+      </div>
+      
+      <!-- JSON Data Field -->
+      <div class="form-group">
+        <label for="jsonData">Flash Cards JSON Data</label>
+        <div class="json-input-header">
+          <small class="format-info">Format: Array of objects with key and value properties</small>
+          <button type="button" class="example-button" (click)="fillWithExampleData()">
+            Fill with Example
+          </button>
+        </div>
+        <textarea 
+          id="jsonData" 
+          formControlName="jsonData" 
+          class="form-control code-editor"
+          [class.is-invalid]="flashCardForm.get('jsonData')?.invalid && flashCardForm.get('jsonData')?.touched"
+          rows="15"
+          placeholder='[
+  {
+    "key": "Question 1",
+    "value": "Answer 1"
+  },
+  {
+    "key": "Question 2",
+    "value": "Answer 2"
+  }
+]'></textarea>
+        <div *ngIf="flashCardForm.get('jsonData')?.invalid && flashCardForm.get('jsonData')?.touched" class="invalid-feedback">
+          <span *ngIf="flashCardForm.get('jsonData')?.errors?.['required']">JSON data is required</span>
+          <span *ngIf="flashCardForm.get('jsonData')?.errors?.['invalidJson']">Invalid JSON format</span>
+          <span *ngIf="flashCardForm.get('jsonData')?.errors?.['notArray']">JSON must be an array</span>
+          <span *ngIf="flashCardForm.get('jsonData')?.errors?.['invalidFormat']">Each item must have 'key' and 'value' properties</span>
+        </div>
+      </div>
+      
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Saving...' : 'Save Flash Cards' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

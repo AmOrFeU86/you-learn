@@ -1,4 +1,11 @@
 <div class="concept-list-container">
+  <div class="concept-list-header">
+    <h1>Concepts</h1>
+    <button class="add-button" (click)="navigateToDataForm()">
+      <i class="fas fa-plus"></i> Add Data
+    </button>
+  </div>
+  
   <app-debug-info 
     [loading]="loading"
     [errorMessage]="errorMessage"
@@ -6,6 +13,7 @@
     [concepts]="concepts"
     [filteredConcepts]="filteredConcepts">
   </app-debug-info>
+  
   <div class="scrollable-content">
     <!-- Main Grid View -->
     <div *ngIf="isListView" class="concept-grid">

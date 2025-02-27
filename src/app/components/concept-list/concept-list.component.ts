@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { ConceptService } from '../../services/concept.service';
 import { Concept } from '../../models/concept.model';
 import { ConceptDetailComponent } from '../concept-detail/concept-detail.component';
@@ -34,7 +34,7 @@ export class ConceptListComponent implements OnInit {
   loading = false;
   errorMessage = '';
 
-  constructor(private conceptService: ConceptService) {
+  constructor(private conceptService: ConceptService, private router: Router) {
     console.log('ConceptListComponent initialized');
   }
 
@@ -163,5 +163,9 @@ export class ConceptListComponent implements OnInit {
 
   filterRootConcepts(): void {
     this.concepts = this.allConcepts.filter(concept => concept.father === null);
+  }
+
+  navigateToDataForm(): void {
+    this.router.navigate(['/data']);
   }
 }
