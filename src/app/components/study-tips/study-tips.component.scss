@@ -1,0 +1,156 @@
+@import '../../../styles/variables';
+
+.study-tips-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  color: var(--text-color);
+  height: calc(100vh - 60px); /* Adjust based on your header height */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.study-tips-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  
+  h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    font-weight: 300;
+  }
+}
+
+.tips-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  overflow-y: auto;
+  padding-right: 1rem; /* Space for scrollbar */
+  flex: 1;
+  
+  /* Custom scrollbar styling */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(var(--primary-color-rgb), 0.05);
+    border-radius: 10px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(var(--primary-color-rgb), 0.3);
+    border-radius: 10px;
+    
+    &:hover {
+      background: rgba(var(--primary-color-rgb), 0.5);
+    }
+  }
+}
+
+.tip-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  display: flex;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.tip-icon {
+  flex: 0 0 50px;
+  height: 50px;
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  
+  i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+  }
+}
+
+.tip-text {
+  flex: 1;
+  
+  h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+  }
+  
+  p {
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    
+    strong {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+  }
+}
+
+.tips-footer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
+  
+  .quote {
+    max-width: 600px;
+    text-align: center;
+    position: relative;
+    padding: 1.5rem;
+    
+    i {
+      font-size: 2rem;
+      color: rgba(var(--primary-color-rgb), 0.2);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    
+    p {
+      font-size: 1.2rem;
+      font-style: italic;
+      margin: 0;
+      
+      &.author {
+        margin-top: 1rem;
+        font-size: 1rem;
+        font-style: normal;
+        color: var(--accent-color);
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .tips-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .study-tips-header {
+    h1 {
+      font-size: 2rem;
+    }
+  }
+}

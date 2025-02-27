@@ -6,6 +6,7 @@ import { FlashCardFormComponent } from './components/flash-card-form/flash-card-
 import { MatchingGameComponent } from './components/matching-game/matching-game.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { QuizFormComponent } from './components/quiz-form/quiz-form.component';
+import { StudyTipsComponent } from './components/study-tips/study-tips.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/concepts', pathMatch: 'full' },
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'matching-game', component: MatchingGameComponent },
   { path: 'quiz', component: QuizComponent },
   { path: 'quiz-form', component: QuizFormComponent },
+  { path: 'study-tips', component: StudyTipsComponent },
   { path: 'data', component: DataFormComponent }
 ];

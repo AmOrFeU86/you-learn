@@ -5,17 +5,19 @@ import { Router } from '@angular/router';
 interface QuizOption {
   text: string;
   isCorrect: boolean;
-  selected?: boolean;
+  selected: boolean;
 }
 
 interface QuizQuestion {
   question: string;
   options: QuizOption[];
-  answered?: boolean;
-  correct?: boolean;
+  answered: boolean;
+  correct: boolean;
 }
 
 interface QuizData {
+  title: string;
+  description: string;
   questions: QuizQuestion[];
 }
 
@@ -27,144 +29,132 @@ interface QuizData {
   styleUrls: ['./quiz.component.scss']
 })
 export class QuizComponent implements OnInit {
+  // Quiz data
+  quizData: QuizData = {
+    title: 'Sample Quiz',
+    description: 'Test your knowledge with this sample quiz',
+    questions: []
+  };
+  
   // Key for storing quiz data in localStorage
   private readonly QUIZ_DATA_KEY = 'youlearn-quiz-data';
-  
+
   // Quiz state
-  quizData: QuizData = { questions: [] };
-  currentQuestionIndex = 0;
   quizStarted = false;
   quizCompleted = false;
+  currentQuestionIndex = 0;
+  currentQuestion: QuizQuestion | null = null;
   
   // Stats
   correctAnswers = 0;
   totalQuestions = 0;
+  score = 0;
   
   // Messages
   noQuestionsAvailable = false;
+  errorMessage = '';
+  successMessage = '';
   
   constructor(private router: Router) {}
   
   ngOnInit(): void {
+    // Load quiz data
     this.loadQuizData();
   }
   
   loadQuizData(): void {
     try {
+      // Try to load quiz data from localStorage
       const storedData = localStorage.getItem(this.QUIZ_DATA_KEY);
+      
       if (storedData) {
-        this.quizData = JSON.parse(storedData) as QuizData;
+        const parsedData = JSON.parse(storedData);
         
-        if (this.quizData.questions.length === 0) {
-          this.noQuestionsAvailable = true;
+        // Check if the parsed data has the expected structure
+        if (parsedData && parsedData.questions && Array.isArray(parsedData.questions)) {
+          this.quizData = parsedData;
+          
+          // Ensure all questions have the required properties
+          this.quizData.questions.forEach(question => {
+            question.answered = false;
+            question.correct = false;
+            
+            // Ensure all options have the required properties
+            if (question.options && Array.isArray(question.options)) {
+              question.options.forEach(option => {
+                option.selected = false;
+              });
+            }
+          });
+          
+          this.noQuestionsAvailable = this.quizData.questions.length === 0;
+          this.totalQuestions = this.quizData.questions.length;
           return;
         }
-        
-        this.totalQuestions = this.quizData.questions.length;
-        
-        // Reset any previous selections
-        this.quizData.questions.forEach(question => {
-          question.answered = false;
-          question.correct = false;
-          question.options.forEach(option => {
-            option.selected = false;
-          });
-        });
-      } else {
-        this.noQuestionsAvailable = true;
       }
+      
+      // If no valid data in localStorage, use fallback data
+      this.useFallbackData();
     } catch (error) {
-      console.error('Error loading quiz data:', error);
-      this.noQuestionsAvailable = true;
+      console.error('Error loading quiz data from localStorage:', error);
+      // Use fallback data if there's an error
+      this.useFallbackData();
     }
   }
   
-  get currentQuestion(): QuizQuestion | null {
-    if (this.quizData.questions.length === 0 || this.currentQuestionIndex >= this.quizData.questions.length) {
-      return null;
-    }
-    return this.quizData.questions[this.currentQuestionIndex];
+  useFallbackData(): void {
+    // Fallback quiz data if nothing is in localStorage
+    this.quizData = {
+      title: 'Angular Quiz',
+      description: 'Test your knowledge of Angular',
+      questions: [
+        {
+          question: 'What is Angular?',
+          options: [
+            { text: 'A JavaScript library for building user interfaces', isCorrect: false, selected: false },
+            { text: 'A JavaScript framework for building web applications', isCorrect: true, selected: false },
+            { text: 'A CSS framework', isCorrect: false, selected: false },
+            { text: 'A database management system', isCorrect: false, selected: false }
+          ],
+          answered: false,
+          correct: false
+        },
+        {
+          question: 'Which of the following is not an Angular directive?',
+          options: [
+            { text: 'ngFor', isCorrect: false, selected: false },
+            { text: 'ngIf', isCorrect: false, selected: false },
+            { text: 'ngSwitch', isCorrect: false, selected: false },
+            { text: 'ngLoop', isCorrect: true, selected: false }
+          ],
+          answered: false,
+          correct: false
+        },
+        {
+          question: 'What is the purpose of Angular services?',
+          options: [
+            { text: 'To provide styling for components', isCorrect: false, selected: false },
+            { text: 'To share data and functionality across components', isCorrect: true, selected: false },
+            { text: 'To create HTML templates', isCorrect: false, selected: false },
+            { text: 'To handle routing only', isCorrect: false, selected: false }
+          ],
+          answered: false,
+          correct: false
+        }
+      ]
+    };
+    
+    this.noQuestionsAvailable = this.quizData.questions.length === 0;
+    this.totalQuestions = this.quizData.questions.length;
   }
   
   startQuiz(): void {
+    // Reset quiz state
     this.quizStarted = true;
     this.quizCompleted = false;
     this.currentQuestionIndex = 0;
     this.correctAnswers = 0;
-    
-    // Shuffle questions
-    this.shuffleQuestions();
-  }
-  
-  shuffleQuestions(): void {
-    this.quizData.questions = this.shuffleArray([...this.quizData.questions]);
-    
-    // Also shuffle options for each question
-    this.quizData.questions.forEach(question => {
-      question.options = this.shuffleArray([...question.options]);
-    });
-  }
-  
-  shuffleArray<T>(array: T[]): T[] {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-  
-  selectOption(option: QuizOption): void {
-    if (!this.currentQuestion || this.currentQuestion.answered) {
-      return;
-    }
-    
-    // Toggle selection for this option
-    option.selected = !option.selected;
-  }
-  
-  submitAnswer(): void {
-    if (!this.currentQuestion || this.currentQuestion.answered) {
-      return;
-    }
-    
-    const question = this.currentQuestion;
-    question.answered = true;
-    
-    // Check if answer is correct (all correct options are selected and no incorrect options are selected)
-    const allCorrectSelected = question.options
-      .filter(o => o.isCorrect)
-      .every(o => o.selected);
-      
-    const noIncorrectSelected = question.options
-      .filter(o => !o.isCorrect)
-      .every(o => !o.selected);
-    
-    question.correct = allCorrectSelected && noIncorrectSelected;
-    
-    if (question.correct) {
-      this.correctAnswers++;
-    }
-  }
-  
-  nextQuestion(): void {
-    if (this.currentQuestionIndex < this.quizData.questions.length - 1) {
-      this.currentQuestionIndex++;
-    } else {
-      this.quizCompleted = true;
-    }
-  }
-  
-  previousQuestion(): void {
-    if (this.currentQuestionIndex > 0) {
-      this.currentQuestionIndex--;
-    }
-  }
-  
-  resetQuiz(): void {
-    this.quizStarted = false;
-    this.quizCompleted = false;
-    this.currentQuestionIndex = 0;
-    this.correctAnswers = 0;
+    this.score = 0;
     
     // Reset all questions and options
     this.quizData.questions.forEach(question => {
@@ -174,10 +164,117 @@ export class QuizComponent implements OnInit {
         option.selected = false;
       });
     });
+    
+    // Shuffle questions
+    this.shuffleQuestions();
+    
+    // Set the current question
+    if (this.quizData.questions.length > 0) {
+      this.currentQuestion = this.quizData.questions[0];
+    }
   }
   
-  navigateToQuizForm(): void {
-    this.router.navigate(['/quiz-form']);
+  shuffleQuestions(): void {
+    this.quizData.questions = this.shuffleArray(this.quizData.questions);
+  }
+  
+  shuffleArray<T>(array: T[]): T[] {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  }
+  
+  selectOption(option: QuizOption): void {
+    if (!this.currentQuestion) return;
+    
+    // Reset all options to unselected first
+    this.currentQuestion.options.forEach((opt: QuizOption) => {
+      opt.selected = false;
+    });
+    
+    // Mark the clicked option as selected
+    option.selected = true;
+  }
+
+  checkAnswer(): void {
+    if (!this.currentQuestion) return;
+    
+    // Find the selected option
+    const selectedOption = this.currentQuestion.options.find((opt: QuizOption) => opt.selected);
+    
+    if (!selectedOption) {
+      this.errorMessage = 'Please select an option before checking the answer.';
+      setTimeout(() => {
+        this.errorMessage = '';
+      }, 3000);
+      return;
+    }
+    
+    // Mark the question as answered
+    this.currentQuestion.answered = true;
+    
+    // Check if the selected option is correct
+    if (selectedOption.isCorrect) {
+      this.successMessage = 'Correct answer!';
+      this.score++;
+      this.currentQuestion.correct = true;
+    } else {
+      this.errorMessage = 'Incorrect answer. Try again!';
+      this.currentQuestion.correct = false;
+    }
+    
+    // Clear messages after 3 seconds
+    setTimeout(() => {
+      this.successMessage = '';
+      this.errorMessage = '';
+    }, 3000);
+  }
+  
+  nextQuestion(): void {
+    if (this.currentQuestionIndex < this.quizData.questions.length - 1) {
+      this.currentQuestionIndex++;
+      this.currentQuestion = this.quizData.questions[this.currentQuestionIndex];
+    } else {
+      this.finishQuiz();
+    }
+  }
+  
+  finishQuiz(): void {
+    this.quizCompleted = true;
+    this.correctAnswers = this.score;
+    this.totalQuestions = this.quizData.questions.length;
+  }
+  
+  previousQuestion(): void {
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--;
+      this.currentQuestion = this.quizData.questions[this.currentQuestionIndex];
+    }
+  }
+  
+  resetQuiz(): void {
+    this.quizCompleted = false;
+    this.currentQuestionIndex = 0;
+    this.correctAnswers = 0;
+    this.score = 0;
+    
+    // Reset all questions and options
+    this.quizData.questions.forEach(question => {
+      question.answered = false;
+      question.correct = false;
+      question.options.forEach(option => {
+        option.selected = false;
+      });
+    });
+    
+    this.quizStarted = false;
+  }
+  
+  goHome(): void {
+    this.router.navigate(['/']);
   }
   
   getScorePercentage(): number {
@@ -191,5 +288,9 @@ export class QuizComponent implements OnInit {
     if (percentage >= 60) return 'good';
     if (percentage >= 40) return 'average';
     return 'poor';
+  }
+  
+  navigateToQuizForm(): void {
+    this.router.navigate(['/quiz-form']);
   }
 }

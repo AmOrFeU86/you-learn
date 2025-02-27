@@ -228,8 +228,9 @@
   border: 2px solid var(--border-color);
   cursor: pointer;
   transition: all 0.2s ease;
+  position: relative;
   
-  &:hover:not(.correct):not(.incorrect) {
+  &:hover:not(.correct):not(.incorrect):not(.unselected-correct) {
     border-color: var(--primary-color);
     background-color: var(--primary-color-light);
   }
@@ -237,16 +238,70 @@
   &.selected:not(.correct):not(.incorrect) {
     border-color: var(--primary-color);
     background-color: var(--primary-color-light);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+      box-shadow: 0 0 0 2px var(--primary-color);
+      pointer-events: none;
+    }
   }
   
   &.correct {
     border-color: var(--success-color);
     background-color: var(--success-color-light);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+      box-shadow: 0 0 0 2px var(--success-color);
+      pointer-events: none;
+    }
   }
   
   &.incorrect {
     border-color: var(--error-color);
     background-color: var(--error-color-light);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+      box-shadow: 0 0 0 2px var(--error-color);
+      pointer-events: none;
+    }
+  }
+  
+  &.unselected-correct {
+    border-color: var(--success-color);
+    background-color: rgba(var(--success-color-rgb), 0.1);
+    animation: pulse-correct 1.5s infinite;
+  }
+}
+
+@keyframes pulse-correct {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--success-color-rgb), 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(var(--success-color-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--success-color-rgb), 0);
   }
 }
 
@@ -276,6 +331,16 @@
     background-color: var(--error-color);
     border-color: var(--error-color);
     color: white;
+  }
+  
+  .unselected-correct & {
+    background-color: transparent;
+    border-color: var(--success-color);
+    color: var(--success-color);
+  }
+  
+  i {
+    font-size: 14px;
   }
 }
 
@@ -324,22 +389,77 @@
 
 .question-controls {
   display: flex;
-  justify-content: center;
-  margin-top: 20px; /* Add more space above controls */
+  justify-content: flex-end;
+  margin-top: 30px;
+  gap: 15px;
 }
 
-.submit-button {
-  background-color: var(--primary-color);
-  color: white;
+.control-button {
+  padding: 12px 20px;
+  border-radius: 6px;
   border: none;
-  border-radius: 4px;
-  padding: 12px 24px;
+  font-weight: 600;
   font-size: 16px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
   
-  &:hover {
-    background-color: var(--primary-color-dark);
+  &.check {
+    background-color: var(--primary-color);
+    color: white;
+    
+    &:hover {
+      background-color: var(--primary-color-dark);
+    }
   }
+  
+  &.next {
+    background-color: var(--accent-color);
+    color: white;
+    
+    &:hover {
+      background-color: var(--accent-color-dark);
+    }
+  }
+  
+  &.finish {
+    background-color: var(--success-color);
+    color: white;
+    
+    &:hover {
+      background-color: var(--success-color-dark);
+    }
+  }
+}
+
+.success-message, .error-message {
+  margin: 15px 0;
+  padding: 12px 15px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease;
+}
+
+.success-message {
+  background-color: var(--success-color-light);
+  color: var(--success-color-dark);
+  border-left: 4px solid var(--success-color);
+}
+
+.error-message {
+  background-color: var(--error-color-light);
+  color: var(--error-color-dark);
+  border-left: 4px solid var(--error-color);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .navigation-controls {
