@@ -1,88 +1,100 @@
 .concept-list-container {
-  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: var(--font-family);
+  height: calc(100vh - 60px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
-  background-color: #f8f9fa;
   transition: background-color 0.3s ease;
 
   .concept-list-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
     
     h1 {
+      color: var(--primary-color);
       margin: 0;
-      color: #333;
       font-size: 1.75rem;
-      transition: color 0.3s ease;
+    }
+  }
+
+  .concept-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .button, .add-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: var(--primary-color-dark);
     }
     
-    .add-button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: background-color 0.2s;
-      
-      &:hover {
-        background-color: #0069d9;
-      }
-      
-      i {
-        font-size: 14px;
-      }
+    i {
+      font-size: 14px;
     }
   }
 
   .scrollable-content {
+    padding: 1rem 2rem 2rem;
     flex: 1;
     overflow-y: auto;
-    padding: 1rem 2rem 2rem;
 
     .concept-grid {
+      padding: 1rem 0;
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-      padding: 1rem 0;
+      gap: 20px;
     }
 
     .concept-card {
-      background: white;
-      border-radius: 8px;
       padding: 1.5rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
       border: 1px solid #e9ecef;
+      background-color: var(--card-background, white);
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
       
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
       }
 
       .concept-header {
         h2 {
           margin: 0 0 0.75rem 0;
-          color: #333;
+          color: var(--primary-color);
           font-size: 1.25rem;
         }
 
         .label {
+          background: #e9ecef;
+          color: #495057;
           display: inline-block;
           padding: 0.25rem 0.75rem;
-          background: #e9ecef;
           border-radius: 16px;
           font-size: 0.875rem;
-          color: #495057;
         }
       }
     }

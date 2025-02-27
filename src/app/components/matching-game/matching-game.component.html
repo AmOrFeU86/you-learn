@@ -1,73 +1,73 @@
 <div class="matching-game-container">
-  <div class="matching-game-header">
+  <header class="matching-game-header">
     <h1>Matching Game</h1>
-    <div class="game-controls">
-      <button class="control-button shuffle" (click)="shuffleCards()" [disabled]="noCardsAvailable || gameComplete">
+    <nav class="game-controls">
+      <button class="button shuffle" (click)="shuffleCards()" [disabled]="noCardsAvailable || gameComplete">
         <i class="fas fa-random"></i> Shuffle Cards
       </button>
-      <button class="control-button reset" (click)="resetGame()" [disabled]="noCardsAvailable">
+      <button class="button reset" (click)="resetGame()" [disabled]="noCardsAvailable">
         <i class="fas fa-redo"></i> Reset Game
       </button>
-      <button class="control-button add-cards" (click)="navigateToFlashCardForm()">
+      <button class="button add-cards" (click)="navigateToFlashCardForm()">
         <i class="fas fa-plus"></i> Manage Flash Cards
       </button>
-    </div>
-  </div>
+    </nav>
+  </header>
 
   <!-- Game progress -->
-  <div *ngIf="!noCardsAvailable" class="game-progress">
+  <section *ngIf="!noCardsAvailable" class="game-progress">
     <div class="progress-bar">
       <div class="progress-fill" [style.width.%]="(matchedPairs / totalPairs) * 100"></div>
     </div>
     <div class="progress-text">
       Matched: {{ matchedPairs }} / {{ totalPairs }}
     </div>
-  </div>
+  </section>
 
   <!-- Messages -->
-  <div class="game-messages">
-    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-  </div>
+  <section class="game-messages">
+    <div *ngIf="successMessage" class="message success-message">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="message error-message">{{ errorMessage }}</div>
+  </section>
 
   <!-- No cards message -->
-  <div *ngIf="noCardsAvailable" class="no-cards-message">
+  <section *ngIf="noCardsAvailable" class="no-cards-message">
     <p>No flash cards available. Click the "Manage Flash Cards" button to create some!</p>
-  </div>
+  </section>
 
   <!-- Game complete message -->
-  <div *ngIf="gameComplete" class="game-complete-message">
+  <section *ngIf="gameComplete" class="game-complete-message">
     <h2>Congratulations!</h2>
     <p>You've successfully matched all the cards!</p>
-    <button class="play-again-button" (click)="resetGame()">Play Again</button>
-  </div>
+    <button class="button play-again-button" (click)="resetGame()">Play Again</button>
+  </section>
 
   <!-- Game board -->
-  <div *ngIf="!noCardsAvailable && !gameComplete" class="game-board">
+  <section *ngIf="!noCardsAvailable && !gameComplete" class="game-board">
     <div class="card-column key-column">
       <h2>Terms</h2>
-      <div class="cards-list">
-        <div *ngFor="let card of keyCards" 
-             class="card key-card" 
-             [class.selected]="card.isSelected"
-             [class.matched]="card.isMatched"
-             (click)="!card.isMatched && selectCard(card)">
+      <ul class="cards-list">
+        <li *ngFor="let card of keyCards" 
+            class="card key-card" 
+            [class.selected]="card.isSelected"
+            [class.matched]="card.isMatched"
+            (click)="!card.isMatched && selectCard(card)">
           <div class="card-content">{{ card.content }}</div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
 
     <div class="card-column value-column">
       <h2>Definitions</h2>
-      <div class="cards-list">
-        <div *ngFor="let card of valueCards" 
-             class="card value-card" 
-             [class.selected]="card.isSelected"
-             [class.matched]="card.isMatched"
-             (click)="!card.isMatched && selectCard(card)">
+      <ul class="cards-list">
+        <li *ngFor="let card of valueCards" 
+            class="card value-card" 
+            [class.selected]="card.isSelected"
+            [class.matched]="card.isMatched"
+            (click)="!card.isMatched && selectCard(card)">
           <div class="card-content">{{ card.content }}</div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
-  </div>
+  </section>
 </div>

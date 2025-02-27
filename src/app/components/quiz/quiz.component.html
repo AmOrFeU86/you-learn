@@ -1,40 +1,40 @@
 <div class="quiz-container">
-  <div class="quiz-header">
+  <header class="quiz-header">
     <h1>Quiz</h1>
-    <div class="quiz-controls">
-      <button class="control-button data" (click)="navigateToQuizForm()">
+    <nav class="quiz-controls">
+      <button class="button control-button data" (click)="navigateToQuizForm()">
         <i class="fas fa-database"></i> Manage Quiz Data
       </button>
-      <button *ngIf="!quizStarted && !noQuestionsAvailable" class="control-button start" (click)="startQuiz()">
+      <button *ngIf="!quizStarted && !noQuestionsAvailable" class="button control-button start" (click)="startQuiz()">
         <i class="fas fa-play"></i> Start Quiz
       </button>
-      <button *ngIf="quizStarted && !quizCompleted" class="control-button reset" (click)="resetQuiz()">
+      <button *ngIf="quizStarted && !quizCompleted" class="button control-button reset" (click)="resetQuiz()">
         <i class="fas fa-redo"></i> Reset Quiz
       </button>
-      <button *ngIf="quizCompleted" class="control-button restart" (click)="startQuiz()">
+      <button *ngIf="quizCompleted" class="button control-button restart" (click)="startQuiz()">
         <i class="fas fa-redo"></i> Restart Quiz
       </button>
-    </div>
-  </div>
+    </nav>
+  </header>
   
   <!-- No questions message -->
-  <div *ngIf="noQuestionsAvailable" class="no-questions-message">
+  <div *ngIf="noQuestionsAvailable" class="message no-questions-message">
     <p>No quiz questions available. Click the "Manage Quiz Data" button to add questions.</p>
   </div>
   
   <!-- Quiz welcome screen -->
-  <div *ngIf="!quizStarted && !noQuestionsAvailable" class="quiz-welcome">
-    <h2>Welcome to the Quiz!</h2>
+  <div *ngIf="!quizStarted && !noQuestionsAvailable" class="welcome quiz-welcome">
+    <h2 class="title">Welcome to the Quiz!</h2>
     <p>This quiz contains {{ totalQuestions }} questions.</p>
     <p>Click "Start Quiz" to begin.</p>
-    <button class="start-button" (click)="startQuiz()">
+    <button class="button start-button" (click)="startQuiz()">
       <i class="fas fa-play"></i> Start Quiz
     </button>
   </div>
   
   <!-- Quiz completed screen -->
-  <div *ngIf="quizCompleted" class="quiz-completed">
-    <h2>Quiz Completed!</h2>
+  <div *ngIf="quizCompleted" class="completed quiz-completed">
+    <h2 class="title">Quiz Completed!</h2>
     <div class="score-container">
       <div class="score" [ngClass]="getScoreClass()">
         {{ correctAnswers }} / {{ totalQuestions }}
@@ -43,85 +43,85 @@
         {{ getScorePercentage() }}%
       </div>
     </div>
-    <p *ngIf="getScorePercentage() >= 80" class="score-message excellent">Excellent! You've mastered this quiz!</p>
-    <p *ngIf="getScorePercentage() >= 60 && getScorePercentage() < 80" class="score-message good">Good job! You're doing well!</p>
-    <p *ngIf="getScorePercentage() >= 40 && getScorePercentage() < 60" class="score-message average">Not bad, but there's room for improvement.</p>
-    <p *ngIf="getScorePercentage() < 40" class="score-message poor">Keep practicing, you'll get better!</p>
+    <p *ngIf="getScorePercentage() >= 80" class="message score-message excellent">Excellent! You've mastered this quiz!</p>
+    <p *ngIf="getScorePercentage() >= 60 && getScorePercentage() < 80" class="message score-message good">Good job! You're doing well!</p>
+    <p *ngIf="getScorePercentage() >= 40 && getScorePercentage() < 60" class="message score-message average">Not bad, but there's room for improvement.</p>
+    <p *ngIf="getScorePercentage() < 40" class="message score-message poor">Keep practicing, you'll get better!</p>
     
-    <div class="completed-controls">
-      <button class="restart-button" (click)="startQuiz()">
+    <div class="controls completed-controls">
+      <button class="button restart-button" (click)="startQuiz()">
         <i class="fas fa-redo"></i> Restart Quiz
       </button>
     </div>
   </div>
   
   <!-- Quiz question -->
-  <div *ngIf="quizStarted && !quizCompleted && currentQuestion" class="quiz-question-container">
-    <div class="question-progress">
+  <div *ngIf="quizStarted && !quizCompleted && currentQuestion" class="container quiz-question-container">
+    <div class="progress question-progress">
       Question {{ currentQuestionIndex + 1 }} of {{ totalQuestions }}
     </div>
     
-    <div class="question-card">
-      <h2 class="question-text">{{ currentQuestion.question }}</h2>
+    <div class="card question-card">
+      <h2 class="title question-text">{{ currentQuestion.question }}</h2>
       
-      <div class="options-list">
+      <div class="list options-list">
         <div *ngFor="let option of currentQuestion.options" 
-             class="option" 
+             class="item option" 
              [class.selected]="option.selected"
              [class.correct]="currentQuestion.answered && option.isCorrect"
              [class.incorrect]="currentQuestion.answered && option.selected && !option.isCorrect"
              [class.unselected-correct]="currentQuestion.answered && option.isCorrect && !option.selected"
              (click)="!currentQuestion.answered && selectOption(option)">
-          <div class="option-checkbox">
+          <div class="checkbox option-checkbox">
             <i *ngIf="option.selected && !currentQuestion.answered" class="fas fa-check"></i>
             <i *ngIf="currentQuestion.answered && option.isCorrect" class="fas fa-check-circle"></i>
             <i *ngIf="currentQuestion.answered && option.selected && !option.isCorrect" class="fas fa-times-circle"></i>
           </div>
-          <div class="option-text">{{ option.text }}</div>
-          <div *ngIf="currentQuestion?.answered" class="option-result">
+          <div class="text option-text">{{ option.text }}</div>
+          <div *ngIf="currentQuestion?.answered" class="result option-result">
             <i *ngIf="option.isCorrect" class="fas fa-check-circle correct-icon"></i>
             <i *ngIf="!option.isCorrect && option.selected" class="fas fa-times-circle incorrect-icon"></i>
           </div>
         </div>
       </div>
       
-      <div class="question-feedback" *ngIf="currentQuestion.answered">
-        <div *ngIf="currentQuestion.correct" class="feedback correct">
+      <div class="feedback question-feedback" *ngIf="currentQuestion.answered">
+        <div *ngIf="currentQuestion.correct" class="correct">
           <i class="fas fa-check-circle"></i> Correct!
         </div>
-        <div *ngIf="!currentQuestion.correct" class="feedback incorrect">
+        <div *ngIf="!currentQuestion.correct" class="incorrect">
           <i class="fas fa-times-circle"></i> Incorrect!
         </div>
       </div>
       
-      <div *ngIf="successMessage" class="success-message">
+      <div *ngIf="successMessage" class="message success-message">
         <i class="fas fa-check-circle"></i>
         {{ successMessage }}
       </div>
       
-      <div *ngIf="errorMessage" class="error-message">
+      <div *ngIf="errorMessage" class="message error-message">
         <i class="fas fa-exclamation-circle"></i>
         {{ errorMessage }}
       </div>
       
-      <div class="question-controls">
+      <div class="controls question-controls">
         <button 
           *ngIf="!currentQuestion?.answered" 
-          class="control-button check" 
+          class="button control-button check" 
           (click)="checkAnswer()">
           <i class="fas fa-check"></i> Check Answer
         </button>
         
         <button 
           *ngIf="currentQuestion?.answered && currentQuestionIndex < (quizData?.questions?.length || 0) - 1" 
-          class="control-button next" 
+          class="button control-button next" 
           (click)="nextQuestion()">
           <i class="fas fa-arrow-right"></i> Next Question
         </button>
         
         <button 
           *ngIf="currentQuestion?.answered && currentQuestionIndex === (quizData?.questions?.length || 0) - 1" 
-          class="control-button finish" 
+          class="button control-button finish" 
           (click)="finishQuiz()">
           <i class="fas fa-flag-checkered"></i> Finish Quiz
         </button>
