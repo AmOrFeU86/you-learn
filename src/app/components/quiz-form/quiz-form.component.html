@@ -1,0 +1,46 @@
+<div class="quiz-form-container">
+  <div class="quiz-form-header">
+    <h1>Quiz Data</h1>
+    <div class="form-controls">
+      <button class="control-button quiz" (click)="navigateToQuiz()">
+        <i class="fas fa-play"></i> Go to Quiz
+      </button>
+      <button class="control-button clear" (click)="clearForm()">
+        <i class="fas fa-eraser"></i> Reset Form
+      </button>
+    </div>
+  </div>
+  
+  <div class="form-messages">
+    <div *ngIf="successMessage" class="success-message">
+      <i class="fas fa-check-circle"></i> {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="error-message">
+      <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+    </div>
+  </div>
+  
+  <div class="form-content">
+    <div class="form-instructions">
+      <h2>Instructions</h2>
+      <p>Enter your quiz data in JSON format. The data should include an array of questions, each with a question text and an array of options.</p>
+      <p>Each option should have a text property and an isCorrect property (true/false).</p>
+      <p>You can have multiple correct options for a question.</p>
+      <p>Click "Save Quiz Data" when you're done.</p>
+    </div>
+    
+    <div class="json-editor">
+      <textarea 
+        [(ngModel)]="quizDataJson" 
+        placeholder="Enter your quiz data in JSON format..."
+        rows="20"
+      ></textarea>
+    </div>
+    
+    <div class="form-actions">
+      <button class="save-button" (click)="saveQuizData()">
+        <i class="fas fa-save"></i> Save Quiz Data
+      </button>
+    </div>
+  </div>
+</div>

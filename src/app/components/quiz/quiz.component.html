@@ -1,0 +1,110 @@
+<div class="quiz-container">
+  <div class="quiz-header">
+    <h1>Quiz</h1>
+    <div class="quiz-controls">
+      <button class="control-button data" (click)="navigateToQuizForm()">
+        <i class="fas fa-database"></i> Manage Quiz Data
+      </button>
+      <button *ngIf="!quizStarted && !noQuestionsAvailable" class="control-button start" (click)="startQuiz()">
+        <i class="fas fa-play"></i> Start Quiz
+      </button>
+      <button *ngIf="quizStarted && !quizCompleted" class="control-button reset" (click)="resetQuiz()">
+        <i class="fas fa-redo"></i> Reset Quiz
+      </button>
+      <button *ngIf="quizCompleted" class="control-button restart" (click)="startQuiz()">
+        <i class="fas fa-redo"></i> Restart Quiz
+      </button>
+    </div>
+  </div>
+  
+  <!-- No questions message -->
+  <div *ngIf="noQuestionsAvailable" class="no-questions-message">
+    <p>No quiz questions available. Click the "Manage Quiz Data" button to add questions.</p>
+  </div>
+  
+  <!-- Quiz welcome screen -->
+  <div *ngIf="!quizStarted && !noQuestionsAvailable" class="quiz-welcome">
+    <h2>Welcome to the Quiz!</h2>
+    <p>This quiz contains {{ totalQuestions }} questions.</p>
+    <p>Click "Start Quiz" to begin.</p>
+    <button class="start-button" (click)="startQuiz()">
+      <i class="fas fa-play"></i> Start Quiz
+    </button>
+  </div>
+  
+  <!-- Quiz completed screen -->
+  <div *ngIf="quizCompleted" class="quiz-completed">
+    <h2>Quiz Completed!</h2>
+    <div class="score-container">
+      <div class="score" [ngClass]="getScoreClass()">
+        {{ correctAnswers }} / {{ totalQuestions }}
+      </div>
+      <div class="score-percentage" [ngClass]="getScoreClass()">
+        {{ getScorePercentage() }}%
+      </div>
+    </div>
+    <p *ngIf="getScorePercentage() >= 80" class="score-message excellent">Excellent! You've mastered this quiz!</p>
+    <p *ngIf="getScorePercentage() >= 60 && getScorePercentage() < 80" class="score-message good">Good job! You're doing well!</p>
+    <p *ngIf="getScorePercentage() >= 40 && getScorePercentage() < 60" class="score-message average">Not bad, but there's room for improvement.</p>
+    <p *ngIf="getScorePercentage() < 40" class="score-message poor">Keep practicing, you'll get better!</p>
+    
+    <div class="completed-controls">
+      <button class="restart-button" (click)="startQuiz()">
+        <i class="fas fa-redo"></i> Restart Quiz
+      </button>
+    </div>
+  </div>
+  
+  <!-- Quiz question -->
+  <div *ngIf="quizStarted && !quizCompleted && currentQuestion" class="quiz-question-container">
+    <div class="question-progress">
+      Question {{ currentQuestionIndex + 1 }} of {{ totalQuestions }}
+    </div>
+    
+    <div class="question-card">
+      <h2 class="question-text">{{ currentQuestion.question }}</h2>
+      
+      <div class="options-list">
+        <div *ngFor="let option of currentQuestion.options" 
+             class="option" 
+             [class.selected]="option.selected"
+             [class.correct]="currentQuestion.answered && option.isCorrect"
+             [class.incorrect]="currentQuestion.answered && option.selected && !option.isCorrect"
+             (click)="!currentQuestion.answered && selectOption(option)">
+          <div class="option-checkbox">
+            <i *ngIf="option.selected" class="fas fa-check"></i>
+          </div>
+          <div class="option-text">{{ option.text }}</div>
+          <div *ngIf="currentQuestion.answered" class="option-result">
+            <i *ngIf="option.isCorrect" class="fas fa-check-circle correct-icon"></i>
+            <i *ngIf="!option.isCorrect && option.selected" class="fas fa-times-circle incorrect-icon"></i>
+          </div>
+        </div>
+      </div>
+      
+      <div class="question-feedback" *ngIf="currentQuestion.answered">
+        <div *ngIf="currentQuestion.correct" class="feedback correct">
+          <i class="fas fa-check-circle"></i> Correct!
+        </div>
+        <div *ngIf="!currentQuestion.correct" class="feedback incorrect">
+          <i class="fas fa-times-circle"></i> Incorrect!
+        </div>
+      </div>
+      
+      <div class="question-controls">
+        <button *ngIf="!currentQuestion.answered" class="submit-button" (click)="submitAnswer()">
+          Submit Answer
+        </button>
+        
+        <div *ngIf="currentQuestion.answered" class="navigation-controls">
+          <button class="nav-button prev" [disabled]="currentQuestionIndex === 0" (click)="previousQuestion()">
+            <i class="fas fa-chevron-left"></i> Previous
+          </button>
+          <button class="nav-button next" (click)="nextQuestion()">
+            Next <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

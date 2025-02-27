@@ -1,12 +1,47 @@
 <div class="flash-cards-container">
   <div class="flash-cards-header">
     <h1>Flash Cards</h1>
-    <button class="add-button" (click)="navigateToAddFlashCards()">
-      <i class="fas fa-plus"></i> Add Flash Cards
-    </button>
+    <div class="header-buttons">
+      <button class="add-button" (click)="navigateToAddFlashCards()">
+        <i class="fas fa-plus"></i> Add Flash Cards
+      </button>
+    </div>
   </div>
   
   <div class="flash-cards-content">
+    <!-- Progress stats -->
+    <div *ngIf="!noCardsAvailable" class="progress-stats">
+      <div class="progress-bar">
+        <div class="progress-segment unseen" [style.width.%]="(progressStats.unseen / progressStats.total) * 100"></div>
+        <div class="progress-segment bad" [style.width.%]="(progressStats.bad / progressStats.total) * 100"></div>
+        <div class="progress-segment good" [style.width.%]="(progressStats.good / progressStats.total) * 100"></div>
+        <div class="progress-segment very-good" [style.width.%]="(progressStats.very_good / progressStats.total) * 100"></div>
+        <div class="progress-segment excellent" [style.width.%]="(progressStats.excellent / progressStats.total) * 100"></div>
+      </div>
+      <div class="progress-legend">
+        <div class="legend-item">
+          <div class="legend-color unseen"></div>
+          <span>Unseen ({{progressStats.unseen}})</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color bad"></div>
+          <span>Need Review ({{progressStats.bad}})</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color good"></div>
+          <span>Good ({{progressStats.good}})</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color very-good"></div>
+          <span>Very Good ({{progressStats.very_good}})</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color excellent"></div>
+          <span>Excellent ({{progressStats.excellent}})</span>
+        </div>
+      </div>
+    </div>
+    
     <!-- No cards message -->
     <div *ngIf="noCardsAvailable" class="no-cards-message">
       <p>No flash cards available. Click the "Add Flash Cards" button to create some!</p>
@@ -14,6 +49,13 @@
     
     <!-- Flash card display -->
     <div *ngIf="!noCardsAvailable && currentCard" class="flash-card-wrapper">
+      <!-- Current card status -->
+      <div *ngIf="currentCardStatus" class="card-status">
+        <span [class]="getStatusClass(currentCardStatus.status)">
+          {{ getStatusText(currentCardStatus.status) }}
+        </span>
+      </div>
+      
       <div class="flash-card" [class.show-answer]="showAnswer">
         <div class="flash-card-inner">
           <!-- Front side (question) -->
@@ -31,6 +73,26 @@
               <h2>Answer</h2>
               <p>{{ currentCard.value }}</p>
             </div>
+            
+            <!-- Knowledge level buttons -->
+            <div class="knowledge-level-buttons">
+              <p>How well did you know this?</p>
+              <div class="button-group">
+                <button class="knowledge-button bad" (click)="updateCardStatus('bad')">
+                  Need Review
+                </button>
+                <button class="knowledge-button good" (click)="updateCardStatus('good')">
+                  Good
+                </button>
+                <button class="knowledge-button very-good" (click)="updateCardStatus('very_good')">
+                  Very Good
+                </button>
+                <button class="knowledge-button excellent" (click)="updateCardStatus('excellent')">
+                  Excellent
+                </button>
+              </div>
+            </div>
+            
             <button class="flip-button" (click)="toggleAnswer()">Show Question</button>
           </div>
         </div>

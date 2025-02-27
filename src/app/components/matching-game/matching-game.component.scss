@@ -1,0 +1,254 @@
+.matching-game-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: var(--font-family);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.matching-game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  
+  h1 {
+    color: var(--primary-color);
+    margin: 0;
+  }
+}
+
+.game-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.control-button {
+  background-color: var(--primary-color);
+  color: var(--text-on-primary);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+  
+  &:hover:not([disabled]) {
+    background-color: var(--primary-color-dark);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  &.shuffle {
+    background-color: var(--accent-color);
+    
+    &:hover:not([disabled]) {
+      background-color: var(--accent-color-dark);
+    }
+  }
+  
+  &.reset {
+    background-color: var(--warning-color);
+    
+    &:hover:not([disabled]) {
+      background-color: var(--warning-color-dark);
+    }
+  }
+}
+
+.game-progress {
+  margin-bottom: 20px;
+  
+  .progress-bar {
+    height: 10px;
+    background-color: var(--background-light);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 5px;
+    
+    .progress-fill {
+      height: 100%;
+      background-color: var(--success-color);
+      transition: width 0.3s ease;
+    }
+  }
+  
+  .progress-text {
+    text-align: right;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+}
+
+.game-messages {
+  min-height: 50px;
+  margin-bottom: 20px;
+  
+  .success-message {
+    padding: 10px;
+    background-color: var(--success-color-light);
+    color: var(--success-color-dark);
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  .error-message {
+    padding: 10px;
+    background-color: var(--error-color-light);
+    color: var(--error-color-dark);
+    border-radius: 4px;
+    text-align: center;
+  }
+}
+
+.no-cards-message, .game-complete-message {
+  text-align: center;
+  padding: 40px;
+  background-color: var(--background-light);
+  border-radius: 8px;
+  margin: 40px 0;
+  
+  h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+  }
+  
+  p {
+    margin-bottom: 20px;
+  }
+}
+
+.play-again-button {
+  background-color: var(--primary-color);
+  color: var(--text-on-primary);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: var(--primary-color-dark);
+  }
+}
+
+.game-board {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+  flex: 1;
+  overflow: hidden;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
+.card-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Important for Firefox */
+  
+  h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 15px;
+    position: sticky;
+    top: 0;
+    background-color: var(--card-background);
+    padding: 10px 0;
+    z-index: 1;
+  }
+}
+
+.cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding-right: 10px; /* Add padding for scrollbar */
+  flex: 1;
+  
+  /* Scrollbar styling */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.card {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  padding: 15px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  
+  &:hover:not(.matched) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  &.selected {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color-light);
+  }
+  
+  &.matched {
+    border-color: var(--success-color);
+    background-color: var(--success-color-light);
+    cursor: default;
+  }
+  
+  .card-content {
+    text-align: center;
+    word-break: break-word;
+  }
+}
+
+.key-card {
+  border-left: 4px solid var(--primary-color);
+  
+  &.matched {
+    border-left: 4px solid var(--success-color);
+  }
+}
+
+.value-card {
+  border-right: 4px solid var(--accent-color);
+  
+  &.matched {
+    border-right: 4px solid var(--success-color);
+  }
+}

@@ -1,0 +1,163 @@
+.quiz-form-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: var(--font-family);
+  max-height: calc(100vh - 80px); /* Adjust height to account for header */
+  overflow-y: auto; /* Enable vertical scrolling */
+  position: relative;
+}
+
+.quiz-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  background-color: var(--background-color);
+  z-index: 10;
+  padding: 10px 0;
+  
+  h1 {
+    color: var(--primary-color);
+    margin: 0;
+  }
+}
+
+.form-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.control-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: var(--primary-color-dark);
+  }
+  
+  &.quiz {
+    background-color: var(--success-color);
+    
+    &:hover {
+      background-color: var(--success-color-dark);
+    }
+  }
+  
+  &.clear {
+    background-color: var(--warning-color);
+    
+    &:hover {
+      background-color: var(--warning-color-dark);
+    }
+  }
+}
+
+.form-messages {
+  margin-bottom: 20px;
+  position: sticky;
+  top: 70px; /* Position below the header */
+  z-index: 5;
+}
+
+.success-message, .error-message {
+  padding: 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.success-message {
+  background-color: var(--success-color-light);
+  color: var(--success-color-dark);
+}
+
+.error-message {
+  background-color: var(--error-color-light);
+  color: var(--error-color-dark);
+}
+
+.form-content {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Add space at the bottom */
+}
+
+.form-instructions {
+  margin-bottom: 20px;
+  
+  h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+  }
+  
+  p {
+    margin: 10px 0;
+    line-height: 1.5;
+  }
+}
+
+.json-editor {
+  margin-bottom: 20px;
+  
+  textarea {
+    width: 100%;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+    background-color: var(--input-background);
+    color: var(--text-primary);
+    min-height: 300px; /* Set minimum height */
+    max-height: 500px; /* Set maximum height */
+    overflow-y: auto; /* Enable scrolling within textarea */
+    
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px var(--primary-color-light);
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.save-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  &:hover {
+    background-color: var(--primary-color-dark);
+  }
+}
