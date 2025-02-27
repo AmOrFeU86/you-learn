@@ -1,8 +1,15 @@
 <div class="concept-list-container">
+  <app-debug-info 
+    [loading]="loading"
+    [errorMessage]="errorMessage"
+    [allConcepts]="allConcepts"
+    [concepts]="concepts"
+    [filteredConcepts]="filteredConcepts">
+  </app-debug-info>
   <div class="scrollable-content">
     <!-- Main Grid View -->
     <div *ngIf="isListView" class="concept-grid">
-      <div *ngFor="let concept of concepts" 
+      <div *ngFor="let concept of filteredConcepts" 
            class="concept-card" 
            (click)="showConceptDetail(concept)">
         <div class="concept-header">

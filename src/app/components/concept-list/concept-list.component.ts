@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ConceptService } from '../../services/concept.service';
 import { Concept } from '../../models/concept.model';
 import { ConceptDetailComponent } from '../concept-detail/concept-detail.component';
+import { DebugInfoComponent } from './debug-info.component';
 
 // Import Prism CSS theme
 import 'prismjs/themes/prism-okaidia.css';
@@ -18,7 +19,7 @@ declare var Prism: any;
 @Component({
   selector: 'app-concept-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, ConceptDetailComponent],
+  imports: [CommonModule, RouterLink, ConceptDetailComponent, DebugInfoComponent],
   templateUrl: './concept-list.component.html',
   styleUrls: ['./concept-list.component.scss'],
   providers: [ConceptService]
@@ -26,30 +27,64 @@ declare var Prism: any;
 export class ConceptListComponent implements OnInit {
   allConcepts: Concept[] = [];  // Store all concepts
   concepts: Concept[] = [];     // Store filtered concepts (root or current level)
+  filteredConcepts: Concept[] = []; // Store filtered concepts
   selectedConcept: Concept | null = null;
   childConcepts: Concept[] = [];
   isListView = true;
+  loading = false;
+  errorMessage = '';
 
-  constructor(private conceptService: ConceptService) {}
+  constructor(private conceptService: ConceptService) {
+    console.log('ConceptListComponent initialized');
+  }
 
   ngOnInit(): void {
+    console.log('ConceptListComponent ngOnInit');
     this.loadConcepts();
   }
 
   loadConcepts(): void {
+    console.log('Loading concepts...');
+    this.loading = true;
     this.conceptService.getConcepts().subscribe({
       next: (concepts) => {
+        console.log('Concepts loaded successfully:', concepts);
+        console.log('Number of concepts:', concepts.length);
+        console.log('First few concepts:', concepts.slice(0, 3));
+        
         this.allConcepts = concepts;
-        this.filterRootConcepts();
+        
+        // More flexible filtering for root concepts
+        // Consider a concept as root if father is null, undefined, 0, or doesn't exist
+        this.concepts = concepts.filter(concept => {
+          const isFatherMissing = concept.father === null || 
+                                concept.father === undefined || 
+                                concept.father === 0 || 
+                                !('father' in concept);
+          
+          console.log(`Concept ${concept.id} - ${concept.title} has father: ${concept.father}, isFatherMissing: ${isFatherMissing}`);
+          
+          return isFatherMissing;
+        });
+        
+        console.log('Root concepts (flexible filtering):', this.concepts);
+        console.log('Number of root concepts:', this.concepts.length);
+        
+        // If still no root concepts, just show all concepts
+        if (this.concepts.length === 0 && concepts.length > 0) {
+          console.log('No root concepts found, displaying all concepts');
+          this.concepts = [...concepts];
+        }
+        
+        this.filteredConcepts = [...this.concepts];
+        this.loading = false;
       },
       error: (error) => {
         console.error('Error loading concepts:', error);
+        this.loading = false;
+        this.errorMessage = 'Error loading concepts. Please try again later.';
       }
     });
-  }
-
-  filterRootConcepts(): void {
-    this.concepts = this.allConcepts.filter(concept => concept.father === null);
   }
 
   getChildConcepts(parentId: number): Concept[] {
@@ -95,8 +130,10 @@ export class ConceptListComponent implements OnInit {
   }
 
   showConceptDetail(concept: Concept): void {
+    console.log('Showing concept detail:', concept);
     this.selectedConcept = concept;
     this.childConcepts = this.getChildConcepts(concept.id);
+    console.log('Child concepts:', this.childConcepts);
     this.isListView = false;
     
     // Make sure we have all concepts loaded
@@ -122,5 +159,9 @@ export class ConceptListComponent implements OnInit {
     this.childConcepts = [];
     this.isListView = true;
     this.filterRootConcepts();
+  }
+
+  filterRootConcepts(): void {
+    this.concepts = this.allConcepts.filter(concept => concept.father === null);
   }
 }

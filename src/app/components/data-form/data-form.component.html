@@ -1,0 +1,44 @@
+<div class="data-form-container">
+  <h1>Add Concepts</h1>
+  
+  <form [formGroup]="conceptForm" (ngSubmit)="onSubmit()">
+    <div class="form-section concepts-section">
+      <h2>Concepts JSON</h2>
+      <p class="section-description">
+        Add concepts in JSON format to your knowledge base. These concepts will be displayed in the concept list.
+      </p>
+      
+      <div class="form-group">
+        <label for="concepts-json">Concepts</label>
+        <textarea 
+          id="concepts-json" 
+          formControlName="conceptsJson" 
+          placeholder="Paste your concepts JSON here. Format: [{ 'id': 1, 'title': 'Concept Title', 'description': 'Concept Description' }, ...]"
+          rows="12"
+          [class.invalid]="conceptForm.get('conceptsJson')?.invalid && conceptForm.get('conceptsJson')?.touched"
+        ></textarea>
+        <div class="error-message" *ngIf="conceptForm.get('conceptsJson')?.invalid && conceptForm.get('conceptsJson')?.touched">
+          <span *ngIf="conceptForm.get('conceptsJson')?.errors?.['required']">Concepts are required</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit" class="submit-button" [disabled]="isSubmitting">
+        <span class="material-icons">save</span> Save Concepts
+      </button>
+    </div>
+    
+    <div class="submission-status">
+      <div class="success-message" *ngIf="submitSuccess">
+        <span class="material-icons">check_circle</span>
+        <span>Concepts saved successfully! Redirecting...</span>
+      </div>
+      
+      <div class="error-message" *ngIf="submitError">
+        <span class="material-icons">error</span>
+        <span>{{ submitError }}</span>
+      </div>
+    </div>
+  </form>
+</div>
