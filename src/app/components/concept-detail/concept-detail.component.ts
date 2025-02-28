@@ -5,6 +5,11 @@ import { Concept } from '../../models/concept.model';
 import { ConceptTreeComponent } from '../concept-tree/concept-tree.component';
 import { ConceptService } from '../../services/concept.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 // Import Prism CSS theme
 import 'prismjs/themes/prism-okaidia.css';
@@ -19,7 +24,16 @@ declare var Prism: any;
 @Component({
   selector: 'app-concept-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, ConceptTreeComponent],
+  imports: [
+    CommonModule, 
+    RouterLink, 
+    ConceptTreeComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatIconModule,
+    MatListModule
+  ],
   templateUrl: './concept-detail.component.html',
   styleUrls: ['./concept-detail.component.scss']
 })

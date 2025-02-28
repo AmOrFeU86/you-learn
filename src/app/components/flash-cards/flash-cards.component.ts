@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 interface FlashCard {
   key: string;
@@ -25,7 +27,7 @@ interface ProgressStats {
 @Component({
   selector: 'app-flash-cards',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './flash-cards.component.html',
   styleUrls: ['./flash-cards.component.scss']
 })

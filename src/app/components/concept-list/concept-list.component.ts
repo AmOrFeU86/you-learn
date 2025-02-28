@@ -5,6 +5,8 @@ import { ConceptService } from '../../services/concept.service';
 import { Concept } from '../../models/concept.model';
 import { ConceptDetailComponent } from '../concept-detail/concept-detail.component';
 import { DebugInfoComponent } from './debug-info.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 // Import Prism CSS theme
 import 'prismjs/themes/prism-okaidia.css';
@@ -19,7 +21,14 @@ declare var Prism: any;
 @Component({
   selector: 'app-concept-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, ConceptDetailComponent, DebugInfoComponent],
+  imports: [
+    CommonModule, 
+    RouterLink, 
+    ConceptDetailComponent, 
+    DebugInfoComponent,
+    MatButtonModule,
+    MatIconModule
+  ],
   templateUrl: './concept-list.component.html',
   styleUrls: ['./concept-list.component.scss'],
   providers: [ConceptService]

@@ -1,11 +1,10 @@
 <div class="concept-list-container">
   <header class="concept-list-header">
     <h1>Concepts</h1>
-    <nav class="concept-controls">
-      <button class="button add-button" (click)="navigateToDataForm()">
-        <i class="fas fa-plus"></i> Add Data
-      </button>
-    </nav>
+    
+    <button mat-raised-button color="primary" (click)="navigateToDataForm()">
+      <mat-icon>add</mat-icon> Add Data
+    </button>
   </header>
   
   <app-debug-info 

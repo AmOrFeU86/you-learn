@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
 * {
   margin: 0;
   padding: 0;
@@ -72,12 +74,6 @@ body.light-theme {
     color: #0066cc;
   }
   
-  button:not(.theme-toggle-button) {
-    background-color: #fff;
-    color: #333;
-    border-color: #ddd;
-  }
-  
   input, textarea, select {
     background-color: #fff;
     color: #333;
@@ -127,12 +123,6 @@ body.dark-theme {
   /* Adjust other elements for dark mode */
   a {
     color: #8ab4f8;
-  }
-  
-  button:not(.theme-toggle-button) {
-    background-color: #333;
-    color: #fff;
-    border-color: #555;
   }
   
   input, textarea, select {
@@ -215,61 +205,6 @@ body.dark-theme {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-}
-
-.app-button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.2s;
-  
-  &:hover:not([disabled]) {
-    background-color: var(--primary-color-dark);
-  }
-  
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  
-  &.secondary {
-    background-color: var(--accent-color);
-    
-    &:hover:not([disabled]) {
-      background-color: var(--accent-color-dark);
-    }
-  }
-  
-  &.success {
-    background-color: var(--success-color);
-    
-    &:hover:not([disabled]) {
-      background-color: var(--success-color-dark);
-    }
-  }
-  
-  &.warning {
-    background-color: var(--warning-color);
-    
-    &:hover:not([disabled]) {
-      background-color: var(--warning-color-dark);
-    }
-  }
-  
-  &.error {
-    background-color: var(--error-color);
-    
-    &:hover:not([disabled]) {
-      background-color: var(--error-color-dark);
-    }
-  }
 }
 
 .scrollable-content {

@@ -2,62 +2,69 @@
 
   <div class="scrollable-content">
     <div class="header-actions">
-      <button class="back-button" (click)="onBack()">
-        {{ concept.father !== null ? '↑ Go to Parent' : '← Back to List' }}
+      <button mat-raised-button color="primary" (click)="onBack()">
+        <mat-icon>{{ concept.father !== null ? 'arrow_upward' : 'arrow_back' }}</mat-icon>
+        {{ concept.father !== null ? 'Go to Parent' : 'Back to List' }}
       </button>
-      <button class="tree-button" *ngIf="concept.children && concept.children.length > 0" (click)="onShowTree()">
-        🌳 View Concept Tree
+      <button mat-raised-button color="accent" *ngIf="concept.children && concept.children.length > 0" (click)="onShowTree()">
+        <mat-icon>account_tree</mat-icon>
+        View Concept Tree
       </button>
     </div>
     
-    <div class="concept-detail-layout">
+    <mat-card class="concept-detail-layout">
       <!-- Left side: Concept Detail -->
-      <div class="concept-content">
-        <h1>{{ concept.title }}</h1>
+      <mat-card-content class="concept-content">
+        <mat-card-title>{{ concept.title }}</mat-card-title>
         <div class="metadata">
-          <span class="label">{{ concept.label }}</span>
-          <span class="category">{{ concept.category }}</span>
+          <mat-chip-set>
+            <mat-chip>{{ concept.label }}</mat-chip>
+            <mat-chip>{{ concept.category }}</mat-chip>
+          </mat-chip-set>
         </div>
         <div class="description" [innerHTML]="getSafeDescription(concept.description)"></div>
         <div class="example" *ngIf="concept.example">
           <h3>Example:</h3>
           <pre><code [class]="'language-' + getLanguageFromExample(concept.example)">{{ formatExample(concept.example) }}</code></pre>
         </div>
-      </div>
+      </mat-card-content>
 
       <!-- Right side: Children Panel -->
       <div class="children-container">
-        <div *ngIf="childConcepts.length > 0" class="children-panel">
-          <h3>Related Concepts</h3>
-          <div class="children-list">
-            <div *ngFor="let child of childConcepts" 
-                 class="child-item" 
+        <mat-card *ngIf="childConcepts.length > 0" class="children-panel">
+          <mat-card-title>Related Concepts</mat-card-title>
+          <mat-card-content>
+            <mat-nav-list class="children-list">
+              <a mat-list-item *ngFor="let child of childConcepts" 
                  (click)="onSelectConcept(child)"
                  [class.active]="concept?.id === child.id">
-              <h4>{{ child.title }}</h4>
-              <span class="label">{{ child.label }}</span>
-            </div>
-          </div>
-        </div>
+                <span matListItemTitle>{{ child.title }}</span>
+                <span matListItemLine>{{ child.label }}</span>
+              </a>
+            </mat-nav-list>
+          </mat-card-content>
+        </mat-card>
       </div>
-    </div>
+    </mat-card>
 
     <!-- Tree View Modal -->
     <div class="modal" *ngIf="showTreeView" (click)="showTreeView = false">
-      <div class="modal-content" (click)="$event.stopPropagation()">
-        <div class="modal-header">
-          <h2>Concept Tree View</h2>
-          <button class="close-button" (click)="showTreeView = false">×</button>
-        </div>
-        <div class="modal-body">
+      <mat-card class="modal-content" (click)="$event.stopPropagation()">
+        <mat-card-header class="modal-header">
+          <mat-card-title>Concept Tree View</mat-card-title>
+          <button mat-icon-button class="close-button" (click)="showTreeView = false">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-card-header>
+        <mat-card-content>
           <app-concept-tree 
             *ngIf="showTreeView && concept"
             [concepts]="allConcepts" 
             [rootConceptId]="concept.id"
             (selectConcept)="onTreeConceptSelect($event)">
           </app-concept-tree>
-        </div>
-      </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

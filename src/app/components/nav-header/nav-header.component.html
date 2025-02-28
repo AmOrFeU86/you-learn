@@ -1,13 +1,15 @@
-<nav class="nav-header">
+<mat-toolbar color="primary" class="nav-header">
   <div class="nav-content">
-    <h1 class="logo">YouLearn</h1>
+    <a mat-button routerLink="/" class="logo-link">
+      <h1 class="logo">YouLearn</h1>
+    </a>
     <div class="nav-buttons">
-      <a routerLink="/concepts" routerLinkActive="active">Concepts</a>
-      <a routerLink="/flash-cards" routerLinkActive="active">Flash Cards</a>
-      <a routerLink="/matching-game" routerLinkActive="active">Matching Game</a>
-      <a routerLink="/quiz" routerLinkActive="active">Quiz</a>
-      <a routerLink="/study-tips" routerLinkActive="active">Tips</a>
+      <a mat-raised-button routerLink="/concepts" routerLinkActive="active">Concepts</a>
+      <a mat-raised-button routerLink="/flash-cards" routerLinkActive="active">Flash Cards</a>
+      <a mat-raised-button routerLink="/matching-game" routerLinkActive="active">Matching Game</a>
+      <a mat-raised-button routerLink="/quiz" routerLinkActive="active">Quiz</a>
+      <a mat-raised-button routerLink="/study-tips" routerLinkActive="active">Tips</a>
       <app-theme-toggle></app-theme-toggle>
     </div>
   </div>
-</nav>
+</mat-toolbar>

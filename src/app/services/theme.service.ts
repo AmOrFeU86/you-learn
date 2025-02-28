@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ThemeService {
   private isDarkTheme = new BehaviorSubject<boolean>(false);
   
-  constructor() {
+  constructor(private overlayContainer: OverlayContainer) {
     // Check if user has a saved preference
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -29,11 +30,21 @@ export class ThemeService {
     
     // Apply theme to document body
     document.body.classList.remove('light-theme', 'dark-theme');
+    document.body.classList.add(isDark ? 'dark-theme' : 'light-theme');
+    
+    // Apply custom CSS variables based on theme
     if (isDark) {
-      document.body.classList.add('dark-theme');
+      document.documentElement.style.setProperty('--background-color', '#303030');
+      document.documentElement.style.setProperty('--text-color', '#ffffff');
     } else {
-      document.body.classList.add('light-theme');
+      document.documentElement.style.setProperty('--background-color', '#fafafa');
+      document.documentElement.style.setProperty('--text-color', '#000000');
     }
+
+    // Apply theme to overlay container (for dialogs, menus, etc.)
+    const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
+    overlayContainerClasses.remove('light-theme', 'dark-theme');
+    overlayContainerClasses.add(isDark ? 'dark-theme' : 'light-theme');
   }
   
   toggleTheme(): void {
