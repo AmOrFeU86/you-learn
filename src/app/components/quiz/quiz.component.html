@@ -2,24 +2,24 @@
   <header class="quiz-header">
     <h1>Quiz</h1>
     <nav class="quiz-controls">
-      <button class="button control-button data" (click)="navigateToQuizForm()">
-        <i class="fas fa-database"></i> Manage Quiz Data
+      <button *ngIf="!quizStarted && !noQuestionsAvailable" mat-raised-button color="primary" class="button control-button start" (click)="startQuiz()">
+        <mat-icon>play_arrow</mat-icon> Start Quiz
       </button>
-      <button *ngIf="!quizStarted && !noQuestionsAvailable" class="button control-button start" (click)="startQuiz()">
-        <i class="fas fa-play"></i> Start Quiz
+      <button *ngIf="quizStarted && !quizCompleted" mat-raised-button color="primary" class="button control-button reset" (click)="resetQuiz()">
+        <mat-icon>refresh</mat-icon> Reset Quiz
       </button>
-      <button *ngIf="quizStarted && !quizCompleted" class="button control-button reset" (click)="resetQuiz()">
-        <i class="fas fa-redo"></i> Reset Quiz
+      <button *ngIf="quizCompleted" mat-raised-button color="primary" class="button control-button restart" (click)="startQuiz()">
+        <mat-icon>refresh</mat-icon> Restart Quiz
       </button>
-      <button *ngIf="quizCompleted" class="button control-button restart" (click)="startQuiz()">
-        <i class="fas fa-redo"></i> Restart Quiz
+      <button mat-raised-button color="primary" class="button control-button data" (click)="navigateToQuizForm()">
+        <mat-icon>add</mat-icon> Data
       </button>
     </nav>
   </header>
   
   <!-- No questions message -->
   <div *ngIf="noQuestionsAvailable" class="message no-questions-message">
-    <p>No quiz questions available. Click the "Manage Quiz Data" button to add questions.</p>
+    <p>No quiz questions available. Click the "Data" button to add questions.</p>
   </div>
   
   <!-- Quiz welcome screen -->
@@ -27,7 +27,7 @@
     <h2 class="title">Welcome to the Quiz!</h2>
     <p>This quiz contains {{ totalQuestions }} questions.</p>
     <p>Click "Start Quiz" to begin.</p>
-    <button class="button start-button" (click)="startQuiz()">
+    <button mat-raised-button color="primary" class="button start-button" (click)="startQuiz()">
       <i class="fas fa-play"></i> Start Quiz
     </button>
   </div>

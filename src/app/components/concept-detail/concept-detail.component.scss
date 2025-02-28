@@ -122,10 +122,11 @@
     background: #f8f9fa;
     border-radius: 8px;
     border: 1px solid #e9ecef;
-    max-height: 400px;
+    max-height: 500px;
     display: flex;
     flex-direction: column;
     transition: background-color 0.3s ease, border-color 0.3s ease;
+    overflow-y: auto;
   
     h3 {
       margin-bottom: 1rem;
@@ -148,6 +149,10 @@
     padding: 0 0.5rem 1.5rem 0;
     margin-bottom: 0;
     flex: 1;
+
+    .mat-mdc-list-item {
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.10);
+    }
   }
 
   .child-item {
@@ -240,9 +245,6 @@
 
 /* Light theme styles */
 :host-context(body.light-theme) {
-  .concept-detail-container {
-    background-color: #fff;
-  }
   
   .concept-content {
     h1 {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 interface FlashCard {
   key: string;
@@ -18,7 +20,7 @@ interface MatchingCard {
 @Component({
   selector: 'app-matching-game',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './matching-game.component.html',
   styleUrls: ['./matching-game.component.scss']
 })

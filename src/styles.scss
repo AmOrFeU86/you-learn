@@ -80,9 +80,7 @@ body.light-theme {
     border-color: #ddd;
   }
   
-  .concept-list-container {
-    background-color: #fff;
-  }
+
   
   .concept-item {
     background-color: #fff;
@@ -93,9 +91,6 @@ body.light-theme {
     background-color: #f0f0f0;
   }
   
-  .concept-detail-container {
-    background-color: #fff;
-  }
   
   pre, code {
     background-color: #f5f5f5 !important;
@@ -106,6 +101,10 @@ body.light-theme {
     background-color: #fff;
     color: #333;
   }
+}
+
+app-theme-toggle {
+  margin-left: 2rem
 }
 
 /* Dark theme styles */
@@ -243,6 +242,7 @@ body.dark-theme {
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
   }
 }
 
