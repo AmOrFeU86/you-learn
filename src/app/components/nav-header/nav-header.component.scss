@@ -28,6 +28,13 @@
   font-weight: normal;
   color: #495057;
   margin: 0;
+  display: inline-block;
+  transition: transform 1s ease, opacity 0.4s ease;
+}
+
+.logo:hover {
+  transform: translateY(-50px);  /* Slides up */
+  opacity: 0; /* Fades out */
 }
 
 // Light theme styles
